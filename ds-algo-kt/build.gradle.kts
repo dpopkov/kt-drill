@@ -1,5 +1,5 @@
 plugins {
-    kotlin("jvm") version "1.9.23"
+    kotlin("jvm") apply false
 }
 
 group = "learn.algo.dsalgokt"
@@ -9,13 +9,11 @@ repositories {
     mavenCentral()
 }
 
-dependencies {
-    testImplementation(kotlin("test"))
-}
+subprojects {
+    group = rootProject.group
+    version = rootProject.version
 
-tasks.test {
-    useJUnitPlatform()
-}
-kotlin {
-    jvmToolchain(17)
+    repositories {
+        mavenCentral()
+    }
 }
