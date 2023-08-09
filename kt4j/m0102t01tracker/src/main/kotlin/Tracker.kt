@@ -8,6 +8,7 @@ class Tracker {
     private var nextId = 1
 
     fun add(item: Item): Item {
+        item.validateName()
         item.id = nextId++
         items[item.id!!] = item
         return item
@@ -21,4 +22,22 @@ class Tracker {
         items.values.filter {
             it.name == name
         }
+
+    fun replace(id: Int, item: Item): Boolean {
+        item.validateName()
+        return findById(id)?.let { found ->
+            items[id] = found.copy(
+                name = item.name,
+            )
+            true
+        } ?: false
+    }
+
+    fun delete(id: Int) {
+        items.remove(id)
+    }
+
+    fun Item.validateName() {
+        require(name.isNotBlank()) { "Наименование должно быть не пустое" }
+    }
 }
