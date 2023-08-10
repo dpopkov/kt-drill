@@ -12,3 +12,4 @@ rootProject.name = "ds-algo-kt"
 include("problems")
 include("solutions")
 include("examples")
+include("common")
