@@ -10,4 +10,5 @@ plugins {
 }
 
 rootProject.name = "kt4j"
+include("common")
 include("m0102t01tracker")
