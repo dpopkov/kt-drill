@@ -1,16 +1,13 @@
 package learn.algo.dsalgokt.ch03linkedlist
 
-class LinkedList<T> {
+class LinkedList<T> : ILinkedList<T> {
     private var head: Node<T>? = null
     private var tail: Node<T>? = null
     private var size = 0
 
-    fun isEmpty(): Boolean = size == 0
+    override fun isEmpty(): Boolean = size == 0
 
-    /**
-     * Добавляет элемент в начало списка.
-     */
-    fun push(value: T): LinkedList<T> {
+    override fun push(value: T): LinkedList<T> {
         head = Node(value = value, next = head)
         if (tail == null) {
             tail = head
@@ -19,10 +16,7 @@ class LinkedList<T> {
         return this
     }
 
-    /**
-     * Добавляет элемент в конец списка.
-     */
-    fun append(value: T): LinkedList<T> {
+    override fun append(value: T): LinkedList<T> {
         if (isEmpty()) {
             push(value)
             return this
@@ -34,14 +28,14 @@ class LinkedList<T> {
         return this
     }
 
-    fun insert(value: T, afterIndex: Int) {
+    override fun insert(value: T, afterIndex: Int) {
         val after = nodeAt(afterIndex)
         if (after != null) {
             insert(value, after)
         }
     }
 
-    fun insert(value: T, after: Node<T>): Node<T> {
+    override fun insert(value: T, after: Node<T>): Node<T> {
         if (after === tail) {
             append(value)
             return tail!!
