@@ -20,4 +20,16 @@ class LinkedListTodo<T> : ILinkedList<T> {
     override fun push(value: T): ILinkedList<T> {
         TODO("Not yet implemented")
     }
+
+    override fun pop(): T? {
+        TODO("Not yet implemented")
+    }
+
+    override fun removeLast(): T? {
+        TODO("Not yet implemented")
+    }
+
+    override fun removeAfter(afterIndex: Int): T? {
+        TODO("Not yet implemented")
+    }
 }

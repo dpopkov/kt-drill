@@ -31,4 +31,28 @@ fun main() {
         list.insert(25, after)
         println(list)
     }
+    "LinkedList pop" example {
+        val list = LinkedList<Int>()
+        list.push(3).push(2).push(1)
+        println("Before popping: $list")
+        val popped = list.pop()
+        println("After popping: $list")
+        println("Popped value: $popped")
+    }
+    "LinkedList removeLast" example {
+        val list = LinkedList<Int>()
+        list.push(3).push(2).push(1)
+        println("Before removing: $list")
+        val removed = list.removeLast()
+        println("After removing: $list")
+        println("Removed value: $removed")
+    }
+    "LinkedList removeAfter" example {
+        val list = LinkedList<Int>()
+        list.push(3).push(2).push(1)
+        println("Before removing: $list")
+        val removed = list.removeAfter(0)
+        println("After removing: $list")
+        println("Removed value: $removed")
+    }
 }

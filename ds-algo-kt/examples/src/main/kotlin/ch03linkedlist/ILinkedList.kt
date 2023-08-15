@@ -15,12 +15,27 @@ interface ILinkedList<T> {
     fun append(value: T): ILinkedList<T>
 
     /**
-     * Добавляет элемент после индекса [afterIndex].
+     * Вставляет элемент после индекса [afterIndex].
      */
     fun insert(value: T, afterIndex: Int)
 
     /**
-     * Добавляет элемент после угла [after]
+     * Вставляет элемент после узла [after] и возвращает вставленный узел.
      */
     fun insert(value: T, after: Node<T>): Node<T>
+
+    /**
+     * Удаляет и возвращает значение из головы списка, или null если список пуст.
+     */
+    fun pop(): T?
+
+    /**
+     * Удаляет и возвращает значение из конца списка, или null если список пуст.
+     */
+    fun removeLast(): T?
+
+    /**
+     * Удаляет и возвращает значение сразу после указанного индекса [afterIndex].
+     */
+    fun removeAfter(afterIndex: Int): T?
 }

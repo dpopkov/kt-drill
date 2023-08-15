@@ -47,6 +47,7 @@ class LinkedList<T> : ILinkedList<T> {
     }
 
     fun nodeAt(index: Int): Node<T>? {
+        require(index in 0..<size) { "Illegal index $index out of bounds" }
         var currentNode = head
         var currentIndex = 0
         while (currentNode != null && currentIndex < index) {
@@ -54,6 +55,46 @@ class LinkedList<T> : ILinkedList<T> {
             currentIndex++
         }
         return currentNode
+    }
+
+    override fun pop(): T? {
+        if (isEmpty()) return null
+        val result = head?.value
+        head = head?.next
+        size--
+        if (isEmpty()) tail = null
+        return result
+    }
+
+    override fun removeLast(): T? {
+        if (isEmpty()) return null
+        if (size == 1) {
+            return pop()
+        }
+        val result = tail?.value
+        var n = head
+        while (n?.next !== tail) {
+            n = n?.next
+        }
+        n?.next = null
+        tail = n
+        size--
+        return result
+    }
+
+    override fun removeAfter(afterIndex: Int): T? {
+        val node = nodeAt(afterIndex)
+        return node?.let { removeAfter(it) }
+    }
+
+    private fun removeAfter(node: Node<T>): T? {
+        if (node.next === tail) {
+            return removeLast()
+        }
+        if (node.next != null) size--
+        val result = node.next?.value
+        node.next = node.next?.next
+        return result
     }
 
     override fun toString(): String =
