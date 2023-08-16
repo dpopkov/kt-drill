@@ -3,7 +3,8 @@ package learn.algo.dsalgokt.ch03linkedlist
 class LinkedList<T> : ILinkedList<T> {
     private var head: Node<T>? = null
     private var tail: Node<T>? = null
-    private var size = 0
+    override var size = 0
+        private set
 
     override fun isEmpty(): Boolean = size == 0
 
@@ -96,6 +97,21 @@ class LinkedList<T> : ILinkedList<T> {
         node.next = node.next?.next
         return result
     }
+
+    private inner class InnerIterator : Iterator<T> {
+        private var nextNode: Node<T>? = this@LinkedList.head
+
+        override fun hasNext(): Boolean = nextNode != null
+
+        override fun next(): T {
+            if (nextNode == null) throw NoSuchElementException()
+            val result: T = nextNode!!.value
+            nextNode = nextNode?.next
+            return result
+        }
+    }
+
+    override fun iterator(): Iterator<T> = InnerIterator()
 
     override fun toString(): String =
         if (isEmpty()) {

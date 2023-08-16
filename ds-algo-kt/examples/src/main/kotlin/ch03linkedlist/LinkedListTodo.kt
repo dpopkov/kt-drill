@@ -1,6 +1,9 @@
 package learn.algo.dsalgokt.ch03linkedlist
 
 class LinkedListTodo<T> : ILinkedList<T> {
+    override val size: Int
+        get() = TODO("Not yet implemented")
+
     override fun isEmpty(): Boolean {
         TODO("Not yet implemented")
     }
@@ -30,6 +33,10 @@ class LinkedListTodo<T> : ILinkedList<T> {
     }
 
     override fun removeAfter(afterIndex: Int): T? {
+        TODO("Not yet implemented")
+    }
+
+    override fun iterator(): Iterator<T> {
         TODO("Not yet implemented")
     }
 }

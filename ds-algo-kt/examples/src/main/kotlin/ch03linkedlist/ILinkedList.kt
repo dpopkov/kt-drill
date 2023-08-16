@@ -1,6 +1,8 @@
 package learn.algo.dsalgokt.ch03linkedlist
 
-interface ILinkedList<T> {
+interface ILinkedList<T> : Iterable<T> {
+
+    val size: Int
 
     fun isEmpty(): Boolean
 

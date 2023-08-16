@@ -114,4 +114,18 @@ abstract class BasicLinkedListTest(
         assertNull(v3)
         assertFalse(list.isEmpty())
     }
+
+    @Test
+    fun `iterator - returns iterator object`() {
+        list.push(1).push(2).push(3)
+
+        val i = list.iterator()
+        assertTrue(i.hasNext())
+        assertEquals(3, i.next())
+        assertTrue(i.hasNext())
+        assertEquals(2, i.next())
+        assertTrue(i.hasNext())
+        assertEquals(1, i.next())
+        assertFalse(i.hasNext())
+    }
 }
