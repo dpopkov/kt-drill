@@ -113,6 +113,20 @@ class LinkedList<T> : ILinkedList<T> {
 
     override fun iterator(): Iterator<T> = InnerIterator()
 
+    override fun contains(element: T): Boolean {
+        for (item in this) {
+            if (item == element) return true
+        }
+        return false
+    }
+
+    override fun containsAll(elements: Collection<T>): Boolean {
+        for (element in elements) {
+            if (!contains(element)) return false
+        }
+        return true
+    }
+
     override fun toString(): String =
         if (isEmpty()) {
             "Empty list"

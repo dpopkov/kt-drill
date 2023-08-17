@@ -1,10 +1,10 @@
 package learn.algo.dsalgokt.ch03linkedlist
 
-interface ILinkedList<T> : Iterable<T> {
+interface ILinkedList<T> : Iterable<T>, Collection<T> {
 
-    val size: Int
+    override val size: Int
 
-    fun isEmpty(): Boolean
+    override fun isEmpty(): Boolean
 
     /**
      * Добавляет элемент в начало списка.

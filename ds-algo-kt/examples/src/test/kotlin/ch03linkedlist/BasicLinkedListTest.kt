@@ -128,4 +128,21 @@ abstract class BasicLinkedListTest(
         assertEquals(1, i.next())
         assertFalse(i.hasNext())
     }
+
+    @Test
+    fun `contains - checks if element is contained`() {
+        list.push(1).push(2)
+
+        assertTrue(list.contains(1))
+        assertTrue(list.contains(2))
+        assertFalse(list.contains(3))
+    }
+
+    @Test
+    fun `containsAll - checks if all elements are contained`() {
+        list.push(1).push(2)
+
+        assertTrue(list.containsAll(listOf(1, 2)))
+        assertFalse(list.containsAll(listOf(1, 2, 3)))
+    }
 }

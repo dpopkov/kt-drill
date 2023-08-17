@@ -39,4 +39,12 @@ class LinkedListTodo<T> : ILinkedList<T> {
     override fun iterator(): Iterator<T> {
         TODO("Not yet implemented")
     }
+
+    override fun contains(element: T): Boolean {
+        TODO("Not yet implemented")
+    }
+
+    override fun containsAll(elements: Collection<T>): Boolean {
+        TODO("Not yet implemented")
+    }
 }
