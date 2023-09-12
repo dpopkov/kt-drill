@@ -36,7 +36,7 @@ class LinkedListTodo<T> : ILinkedList<T> {
         TODO("Not yet implemented")
     }
 
-    override fun iterator(): Iterator<T> {
+    override fun iterator(): MutableIterator<T> {
         TODO("Not yet implemented")
     }
 

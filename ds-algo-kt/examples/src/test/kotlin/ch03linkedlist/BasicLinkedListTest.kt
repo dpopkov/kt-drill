@@ -4,6 +4,7 @@ import learn.algo.dsalgokt.ch03linkedlist.ILinkedList
 import learn.algo.dsalgokt.common.printAndReturn
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
@@ -127,6 +128,118 @@ abstract class BasicLinkedListTest(
         assertTrue(i.hasNext())
         assertEquals(1, i.next())
         assertFalse(i.hasNext())
+    }
+
+    @Test
+    fun `iterator removes single element`() {
+        list.push(3)
+        val i = list.iterator()
+        assertTrue(i.hasNext())
+        assertEquals(3, i.next())
+        i.remove()
+        assertFalse(i.hasNext())
+        assertTrue(list.isEmpty())
+    }
+
+    @Test
+    fun `iterator - returned iterator removes first element`() {
+        list.push(1).push(2).push(3)
+
+        val i = list.iterator()
+        assertTrue(i.hasNext())
+        assertEquals(3, i.next())
+        i.remove()
+        assertTrue(i.hasNext())
+
+        val i2 = list.iterator()
+        assertEquals(2, i2.next())
+        assertTrue(i2.hasNext())
+        assertEquals(1, i2.next())
+        assertFalse(i2.hasNext())
+        assertEquals(2, list.size)
+    }
+
+    @Test
+    fun `iterator - returned iterator removes middle element`() {
+        list.push(1).push(2).push(3)
+
+        val i = list.iterator()
+        assertEquals(3, i.next())
+        assertEquals(2, i.next())
+        i.remove()
+        assertTrue(i.hasNext())
+
+        val i2 = list.iterator()
+        assertEquals(3, i2.next())
+        assertTrue(i2.hasNext())
+        assertEquals(1, i2.next())
+        assertFalse(i2.hasNext())
+        assertEquals(2, list.size)
+    }
+
+    @Test
+    fun `iterator - returned iterator removes last element`() {
+        list.push(1).push(2).push(3)
+
+        val i = list.iterator()
+        assertEquals(3, i.next())
+        assertEquals(2, i.next())
+        assertEquals(1, i.next())
+        i.remove()
+        assertFalse(i.hasNext())
+
+        val i2 = list.iterator()
+        assertEquals(3, i2.next())
+        assertTrue(i2.hasNext())
+        assertEquals(2, i2.next())
+        assertFalse(i2.hasNext())
+        assertEquals(2, list.size)
+
+        // Test appending
+        list.append(11)
+        printAndReturn(list).also { assertEquals("3 -> 2 -> 11", it) }
+    }
+
+    @Test
+    fun `iterator - returned iterator removes after remove`() {
+        list.push(1).push(2).push(3).push(4)
+
+        val i = list.iterator()
+        assertEquals(4, i.next())
+        assertEquals(3, i.next())
+        i.remove()
+        printAndReturn(list).also { assertEquals("4 -> 2 -> 1", it) }
+        assertEquals(2, i.next())
+        i.remove()
+        printAndReturn(list).also { assertEquals("4 -> 1", it) }
+    }
+
+    @Test
+    fun `iterator - throws exception if next was not called`() {
+        list.push(1)
+
+        assertThrows<IllegalStateException> {
+            list.iterator().remove()
+        }
+    }
+
+    @Test
+    fun `iterator - throws exception if next was not called after remove`() {
+        list.push(1).push(2)
+        val i = list.iterator()
+        assertEquals(2, i.next())
+        i.remove()
+
+        assertThrows<IllegalStateException> {
+            i.remove()
+        }
+    }
+
+    @Test
+    fun `iterator - throws exception if there's no nodes`() {
+        assertThrows<IllegalStateException> {
+            list.iterator().remove()
+        }
     }
 
     @Test

@@ -98,20 +98,41 @@ class LinkedList<T> : ILinkedList<T> {
         return result
     }
 
-    private inner class InnerIterator : Iterator<T> {
+    private inner class InnerIterator : MutableIterator<T> {
         private var nextNode: Node<T>? = this@LinkedList.head
+        private var returnedNode: Node<T>? = null
+        private var preReturnedNode: Node<T>? = null
 
         override fun hasNext(): Boolean = nextNode != null
 
         override fun next(): T {
             if (nextNode == null) throw NoSuchElementException()
             val result: T = nextNode!!.value
+            if (returnedNode != null) {
+                preReturnedNode = returnedNode
+            }
+            returnedNode = nextNode
             nextNode = nextNode?.next
             return result
         }
+
+        override fun remove() {
+            if (isEmpty()) throw IllegalStateException("List is empty")
+            if (returnedNode == null) throw IllegalStateException("next() was not called")
+            if (returnedNode === head) { // удаление 1-го элемента
+                pop()
+            }
+            else if (returnedNode === tail) { // удаление последнего
+                removeLast()
+            }
+            else {  // удаление промежуточного
+                removeAfter(preReturnedNode!!)
+            }
+            returnedNode = null
+        }
     }
 
-    override fun iterator(): Iterator<T> = InnerIterator()
+    override fun iterator(): MutableIterator<T> = InnerIterator()
 
     override fun contains(element: T): Boolean {
         for (item in this) {
