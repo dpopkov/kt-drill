@@ -1,3 +1,5 @@
+package bountyboard
+
 import java.lang.IllegalArgumentException
 
 const val HERO_NAME: String = "Madrigal"
