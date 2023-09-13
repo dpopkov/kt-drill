@@ -1,6 +1,6 @@
 package learn.algo.dsalgokt.ch03linkedlist
 
-interface ILinkedList<T> : MutableIterable<T>, Collection<T> {
+interface ILinkedList<T> : MutableIterable<T>, MutableCollection<T> {
 
     override val size: Int
 

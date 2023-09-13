@@ -154,4 +154,49 @@ class LinkedList<T> : ILinkedList<T> {
         } else {
             head.toString()
         }
+
+    override fun clear() {
+        head = null
+        tail = null
+        size = 0
+    }
+
+    override fun retainAll(elements: Collection<T>): Boolean = removeAllIf { it !in elements }
+
+    override fun removeAll(elements: Collection<T>): Boolean = removeAllIf { it in elements }
+
+    private inline fun removeAllIf(predicate: (T) -> Boolean): Boolean {
+        val i = iterator()
+        var modified = false
+        while (i.hasNext()) {
+            if (predicate(i.next())) {
+                i.remove()
+                modified = true
+            }
+        }
+        return modified
+    }
+
+    override fun remove(element: T): Boolean {
+        val i = iterator()
+        while (i.hasNext()) {
+            if (i.next() == element) {
+                i.remove()
+                return true
+            }
+        }
+        return false
+    }
+
+    override fun addAll(elements: Collection<T>): Boolean {
+        for (element in elements) {
+            append(element)
+        }
+        return true
+    }
+
+    override fun add(element: T): Boolean {
+        append(element)
+        return true
+    }
 }

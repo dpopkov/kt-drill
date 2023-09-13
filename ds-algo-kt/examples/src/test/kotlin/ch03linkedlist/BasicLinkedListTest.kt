@@ -258,4 +258,80 @@ abstract class BasicLinkedListTest(
         assertTrue(list.containsAll(listOf(1, 2)))
         assertFalse(list.containsAll(listOf(1, 2, 3)))
     }
+
+    /*
+        ---------------------------
+        Tests for MutableCollection
+        ---------------------------
+    */
+    @Test
+    fun `add - appends element at the end of the list`() {
+        list.add(1)
+
+        assertEquals(1, list.size)
+        assertEquals(1, list.iterator().next())
+    }
+
+    @Test
+    fun `addAll - adds all elements`() {
+        list.addAll(listOf(1, 2, 3))
+
+        assertEquals(3, list.size)
+        val i = list.iterator()
+        assertEquals(1, i.next())
+        assertEquals(2, i.next())
+        assertEquals(3, i.next())
+    }
+
+    @Test
+    fun `clear - removes all elements`() {
+        list.addAll(listOf(1, 2, 3))
+
+        list.clear()
+        assertTrue(list.isEmpty())
+    }
+
+    @Test
+    fun `remove - removes the specified element`() {
+        list.addAll(listOf(1, 2, 3))
+
+        list.remove(2)
+        assertEquals(2, list.size)
+        val i = list.iterator()
+        assertEquals(1, i.next())
+        assertEquals(3, i.next())
+    }
+
+    @Test
+    fun `remove - removes the specified first element`() {
+        list.addAll(listOf(1, 2, 1, 3))
+
+        list.remove(1)
+        assertEquals(3, list.size)
+        val i = list.iterator()
+        assertEquals(2, i.next())
+        assertEquals(1, i.next())
+        assertEquals(3, i.next())
+    }
+
+    @Test
+    fun `removeAll - removes all the specified elements`() {
+        list.addAll(listOf(1, 2, 1, 3))
+
+        list.removeAll(listOf(1, 3))
+        assertEquals(1, list.size)
+        assertEquals(2, list.iterator().next())
+    }
+
+    @Test
+    fun `retainAll - removes all except the specified elements`() {
+        list.addAll(listOf(1, 2, 1, 3, 4))
+
+        list.retainAll(listOf(1, 3, 5))
+        assertEquals(3, list.size)
+        val i = list.iterator()
+        assertEquals(1, i.next())
+        assertEquals(1, i.next())
+        assertEquals(3, i.next())
+    }
 }
