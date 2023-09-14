@@ -1,17 +1,22 @@
 package nyethack
 
-fun main() {
-    narrate(
-        "A hero enters the town of Kronstadt. What is his/her name",
-        ::makeTextYellow
-    )
-    val heroName: String? = readlnOrNull()
-    require(!heroName.isNullOrEmpty()) {
-        "The hero must have a name"
-    }
+var heroName: String = ""
 
-    changeNarratorMood(heroName)
+fun main() {
+    heroName = promptHeroName()
+
+//    changeNarratorMood(heroName)
     narrate("$heroName, ${createTitle(heroName)}, heads to the town square")
+    visitTavern()
+}
+
+private fun promptHeroName(): String {
+    narrate(
+        message = "A hero enters the town of Kronstadt. What is his/her name",
+        modifier = ::makeTextYellow
+    )
+    println("Madrigal")
+    return "Madrigal"
 }
 
 private fun createTitle(s: String): String = when {

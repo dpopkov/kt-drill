@@ -8,7 +8,7 @@ var narrationModifier: (String) -> String = { it }
 fun changeNarratorMood(name: String? = null) {
     val mood: String
     val modifier: (String) -> String
-    when (Random.nextInt(7..8)) {
+    when (Random.nextInt(1..8)) {
         1 -> {
             mood = "loud"
             modifier = { message ->
