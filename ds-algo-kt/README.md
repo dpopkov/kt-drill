@@ -9,3 +9,7 @@
     * [Todo](problems/src/main/kotlin/ch03linkedlist/c01reverse/NodeReversibleTodo.kt)
     * [Solution](problems/src/main/kotlin/ch03linkedlist/c01reverse/NodeReversible.kt)
     * [test](problems/src/test/kotlin/ch03linkedlist/c01reverse/NodeReversibleBaseTest.kt)
+  * [2 - The item in the middle](problems/src/main/kotlin/ch03linkedlist/c02middle/IMiddleFinder.kt)
+    * [Todo](problems/src/main/kotlin/ch03linkedlist/c02middle/MiddleFinderTodo.kt)
+    * [Solution](problems/src/main/kotlin/ch03linkedlist/c02middle/MiddleFinder.kt)
+    * [test](problems/src/test/kotlin/ch03linkedlist/c02middle/MiddleFinderBaseTest.kt)
