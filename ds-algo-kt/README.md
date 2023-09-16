@@ -5,7 +5,7 @@
   * [LinkedList](examples/src/main/kotlin/ch03linkedlist/LinkedList.kt)
   * [test](examples/src/test/kotlin/ch03linkedlist/BasicLinkedListTest.kt)
 * LinkedList Challenges
-  * [1 - Reverse a linked list recursively](problems/src/main/kotlin/ch03linkedlist/c01reverse/IReversible.kt)
+  * [1 - Reverse contents of a linked list](problems/src/main/kotlin/ch03linkedlist/c01reverse/IReversible.kt)
     * [Todo](problems/src/main/kotlin/ch03linkedlist/c01reverse/NodeReversibleTodo.kt)
     * [Solution](problems/src/main/kotlin/ch03linkedlist/c01reverse/NodeReversible.kt)
     * [test](problems/src/test/kotlin/ch03linkedlist/c01reverse/NodeReversibleBaseTest.kt)
@@ -13,3 +13,7 @@
     * [Todo](problems/src/main/kotlin/ch03linkedlist/c02middle/MiddleFinderTodo.kt)
     * [Solution](problems/src/main/kotlin/ch03linkedlist/c02middle/MiddleFinder.kt)
     * [test](problems/src/test/kotlin/ch03linkedlist/c02middle/MiddleFinderBaseTest.kt)
+  * [3 - Reverse a linked list completely](problems/src/main/kotlin/ch03linkedlist/c03reverselist/INodeListReversible.kt)
+    * [Todo](problems/src/main/kotlin/ch03linkedlist/c03reverselist/NodeReversibleTodo.kt)
+    * [Solution](problems/src/main/kotlin/ch03linkedlist/c03reverselist/NodeReversible.kt)
+    * [test](problems/src/test/kotlin/ch03linkedlist/c03reverselist/NodeListReversibleBaseTest.kt)
