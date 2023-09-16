@@ -26,16 +26,14 @@ fun visitTavern() {
     println("There are several items for sale:")
     printMenu(menuItems, menuData)
 
-    val patrons: MutableSet<String> = mutableSetOf()
+    val patrons: MutableSet<String> = firstNames.shuffled()
+        .zip(lastNames.shuffled()) { firstName, lastName -> "$firstName $lastName" }
+        .toMutableSet()
     val patronGold = mutableMapOf(
         TAVERN_MASTER to 86.00,
-        heroName to 4.50
+        heroName to 4.50,
+        *patrons.map { it to 6.0 }.toTypedArray(),
     )
-    while (patrons.size < 5) {
-        val patronName = "${firstNames.random()} ${lastNames.random()}"
-        patrons += patronName
-        patronGold += patronName to 6.0
-    }
 
     narrate("$heroName sees several patrons in the tavern:")
     narrate(patrons.joinToString())
@@ -47,6 +45,19 @@ fun visitTavern() {
         placeOrder(patrons.random(), menuItems.random(), patronGold, menuItemPrices, menuItemTypes)
     }
     displayPatronBalances(patronGold)
+
+    patrons
+        .filter { patron ->
+            patronGold.getOrDefault(patron, 0.0) < 4.0
+        }.also {
+            patrons -= it
+            patronGold -= it
+        }.forEach { patron ->
+            narrate("$heroName sees $patron departing the tavern")
+        }
+
+    narrate("There are still some patrons in the tavern")
+    narrate(patrons.joinToString())
 }
 
 fun printMenu(items: List<String>, data: List<List<String>>) {
