@@ -1,6 +1,8 @@
 package nyethack
 
 import java.io.File
+import kotlin.random.Random
+import kotlin.random.nextInt
 
 private const val TAVERN_MASTER = "Taernyl"
 private const val TAVERN_NAME = "$TAVERN_MASTER's Folly"
@@ -8,19 +10,16 @@ private const val TAVERN_NAME = "$TAVERN_MASTER's Folly"
 private val firstNames = setOf("Alex", "Mordoc", "Sophie", "Tariq")
 private val lastNames = setOf("Ironfoot", "Fernsworth", "Baggins", "Downstrider")
 
-private val menuData: List<String> = File("data/tavern-menu-data.txt").readLines()
-private val menuItems: List<String> = List(menuData.size) { idx ->
-    val (_, name, _) = menuData[idx].split(",")
-    name
-}
-private val menuItemPrices: Map<String, Double> = List(menuData.size) { idx ->
-    val (_, name, price) = menuData[idx].split(",")
+private val menuData: List<List<String>> = File("data/tavern-menu-data.txt")
+    .readLines()
+    .map { it.split(",") }
+private val menuItems: List<String> = menuData.map { (_, name, _) -> name }
+private val menuItemPrices: Map<String, Double> = menuData.associate { (_, name, price) ->
     name to price.toDouble()
-}.toMap()
-private val menuItemTypes: Map<String, String> = List(menuData.size) { idx ->
-    val (type, name, _) = menuData[idx].split(",")
+}
+private val menuItemTypes: Map<String, String> = menuData.associate { (type, name, _) ->
     name to type
-}.toMap()
+}
 
 fun visitTavern() {
     narrate("$heroName enters $TAVERN_NAME")
@@ -41,18 +40,21 @@ fun visitTavern() {
     narrate("$heroName sees several patrons in the tavern:")
     narrate(patrons.joinToString())
 
+    val itemOfDay = patrons.flatMap { getFavoriteMenuItems(it) }.random()
+    println("The item of the day is $itemOfDay")
+
     repeat(3) {
         placeOrder(patrons.random(), menuItems.random(), patronGold, menuItemPrices, menuItemTypes)
     }
     displayPatronBalances(patronGold)
 }
 
-fun printMenu(items: List<String>, data: List<String>) {
+fun printMenu(items: List<String>, data: List<List<String>>) {
     val width = items.maxBy { it.length }.length + 9
     println("*** Welcome to $TAVERN_NAME ***")
     val byType: MutableMap<String, MutableList<String>> = mutableMapOf()
     data.forEach { line ->
-        val (type, name, price) = line.split(",")
+        val (type, name, price) = line
         byType.getOrPut(type) { mutableListOf() }
             .add(format(name, price, width))
     }
@@ -63,6 +65,7 @@ fun printMenu(items: List<String>, data: List<String>) {
 }
 
 private fun formatCentered(s: String, width: Int) = s.padStart((width - s.length) / 2 + s.length)
+
 private fun format(name: String, price: String, width: Int): String {
     val dots = ".".repeat(width - name.length - price.length)
     return "$name$dots$price"
@@ -81,6 +84,18 @@ private fun masterSaysAbout(allPatrons: List<String>, vararg somePatrons: String
     println(othersMessage)
 }
 
+private fun getFavoriteMenuItems(patron: String): List<String> {
+    return when (patron) {
+        "Alex Ironfoot" -> menuItems.filter { menuItem ->
+            menuItemTypes[menuItem]?.contains("dessert") == true
+        }
+        else -> menuItems.shuffled().take(Random.nextInt(1..2))
+    }
+}
+
+/**
+ * Сообщает о заказе клиента.
+ */
 private fun placeOrder(
     patronName: String,
     menuItemName: String,
