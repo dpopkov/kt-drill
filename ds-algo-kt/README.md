@@ -17,3 +17,7 @@
     * [Todo](problems/src/main/kotlin/ch03linkedlist/c03reverselist/NodeReversibleTodo.kt)
     * [Solution](problems/src/main/kotlin/ch03linkedlist/c03reverselist/NodeReversible.kt)
     * [test](problems/src/test/kotlin/ch03linkedlist/c03reverselist/NodeListReversibleBaseTest.kt)
+  * [4 - Merging two linked lists](problems/src/main/kotlin/ch03linkedlist/c04merging/INodeListMerger.kt)
+    * [Todo](problems/src/main/kotlin/ch03linkedlist/c04merging/NodeListMergerTodo.kt)
+    * [Solution](problems/src/main/kotlin/ch03linkedlist/c04merging/NodeListMerger.kt)
+    * [test](problems/src/test/kotlin/ch03linkedlist/c04merging/NodeListMergerBaseTest.kt)
