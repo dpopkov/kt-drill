@@ -21,3 +21,6 @@
     * [Todo](problems/src/main/kotlin/ch03linkedlist/c04merging/NodeListMergerTodo.kt)
     * [Solution](problems/src/main/kotlin/ch03linkedlist/c04merging/NodeListMerger.kt)
     * [test](problems/src/test/kotlin/ch03linkedlist/c04merging/NodeListMergerBaseTest.kt)
+* Stack (push, pop, peek)
+  * [example](examples/src/main/kotlin/ch04stack/Stack.kt)
+  * [test](examples/src/test/kotlin/ch04stack/StackTest.kt)
