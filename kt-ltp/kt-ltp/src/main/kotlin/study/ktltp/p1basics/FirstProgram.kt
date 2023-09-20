@@ -15,20 +15,8 @@ internal class FirstProgram {
         frame.iconImage = ImageIcon(getIconImageBytes()).image
         val panel = TilePanel(
             createTileColors(
-//                shader = Shader.from("zebra"),
-                shader = StairsShader(
-                    style = object : StairsStyle {
-                        override val stairsColor = GRAY_INTENCITY.BLACK
-                        override val airColor = GRAY_INTENCITY.WHITE
-                        private val blackIndices = listOf(1, 6)
-
-                        override fun shadeAsStairsPredicate(columnIdx: Int, rowIdx: Int): Boolean {
-                            return rowIdx in blackIndices && columnIdx in blackIndices
-                        }
-
-                    }
-                ),
-                size = 8,
+                shader = Shader.from("dots"),
+                size = 16,
             )
         )
         frame.add(panel)
@@ -74,10 +62,12 @@ internal interface StairsStyle {
     }
 }
 
+const val MAX_INTENCITY = 255
+
 enum class GRAY_INTENCITY(val v: Int) {
-    WHITE(255),
-    LIGHT_GRAY(240),
-    MIDDLE_GRAY(140),
-    DARK_GRAY(40),
+    WHITE(MAX_INTENCITY),
+    LIGHT_GRAY(MAX_INTENCITY / 4 * 3),
+    MIDDLE_GRAY(MAX_INTENCITY / 2),
+    DARK_GRAY(MAX_INTENCITY / 4),
     BLACK(0);
 }
