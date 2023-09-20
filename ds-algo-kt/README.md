@@ -24,3 +24,9 @@
 * Stack (push, pop, peek)
   * [example](examples/src/main/kotlin/ch04stack/Stack.kt)
   * [test](examples/src/test/kotlin/ch04stack/StackTest.kt)
+* Stack Challenges
+  * 1 - Print reversed linked list using stack - too simple. 
+  * [2 - The parentheses validation](problems/src/main/kotlin/ch04stack/c02parentheses/IParenthesesBalance.kt)
+    * [Todo](problems/src/main/kotlin/ch04stack/c02parentheses/ParenthesesBalanceTodo.kt)
+    * [Solution](problems/src/main/kotlin/ch04stack/c02parentheses/ParenthesesBalance.kt)
+    * [test](problems/src/test/kotlin/ch04stack/c02parentheses/ParenthesesBalanceBaseTest.kt)
