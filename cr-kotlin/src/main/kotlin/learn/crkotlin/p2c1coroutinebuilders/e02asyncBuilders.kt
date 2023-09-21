@@ -1,6 +1,10 @@
 package learn.crkotlin.p2c1coroutinebuilders
 
 import kotlinx.coroutines.*
+import learn.crkotlin.learn.common.log
+import learn.crkotlin.learn.common.logNamed
+import learn.crkotlin.learn.common.printMillisInBackground
+import kotlin.system.measureTimeMillis
 
 
 fun main() {
@@ -13,6 +17,8 @@ fun main() {
     // async04ExampleOfObtainingData()
 
     /* С использованием Structured Concurrency */
+    // async05exampleGlobalScope()
+    async06exampleStructured()
 }
 
 /**
@@ -27,9 +33,14 @@ private fun async01SimpleUsage() = runBlocking {
         delay(1000L)
         42
     }
-    println("Do something else")
+    log("Do something else")
     val result: Int = resultDeferred.await()
-    println(result)
+    log(result)
+    /*
+Output:
+0 [main] Do something else
+250 500 750 1000 [main] 42
+     */
 }
 
 /**
@@ -52,13 +63,14 @@ private fun async02StartAndAwait() = runBlocking {
         delay(2000L)
         "Text 3"
     }
-    println(res1.await())
-    println(res2.await())
-    println(res3.await())
+    log(res1.await())
+    log(res2.await())
+    log(res3.await())
     /*
-. . . . Text 1
-. . . . . . . . . . . . Text 2
-Text 3
+Output:
+0 250 500 750 1000 [main] Text 1
+1250 1500 1750 2000 2250 2500 2750 3000 3250 3500 3750 [main] Text 2
+[main] Text 3
      */
 }
 
@@ -79,9 +91,10 @@ private fun async03DoNotUseAsyncInsteadOfLaunch() {
         delay(2000L)
     }
     /*
-. Hello,
-. . . World!
-. . . .
+Output:
+0 Hello,
+250 500 750 World!
+1000 1250 1500 1750
      */
 }
 
@@ -105,6 +118,12 @@ private fun async04ExampleOfObtainingData() {
         println("News: ${news.await()}")
         println("News summary: $newsSummary")
     }
+    /*
+Output:
+0 Getting news...
+250 500 750 1000 1250 1500 1750 2000 2250 2500 2750 News: [news2, news1]
+News summary: News Summary
+     */
 }
 
 private class NewsRepo(val newsDelay: Long, val summaryDelay: Long) {
@@ -119,17 +138,53 @@ private class NewsRepo(val newsDelay: Long, val summaryDelay: Long) {
     }
 }
 
-/**
- * Печатает прошедшие миллисекунды с интервалом в четверть секунды, чтобы визуализировать задержки, вставленные в основные ф-ии.
- * Должна запускаться без блокировки, то есть не внутри runBlocking, чтобы не мешать завершению основной программы.
+/*
+Structured Concurrency
+----------------------
+
+Если корутина стартует на GlobalScope, то программа не будет ее ждать.
+Корутины не блокируют потоков, и ничто не предотвратит программу от завершения.
+Поэтому в следующем примере в конце runBlocking нужно поместить дополнительный delay,
+чтобы увидеть напечатанным финальный "World!"
  */
-private fun printMillisInBackground() {
-    var currentMillis = 0L
+private fun async05exampleGlobalScope() = runBlocking {
     GlobalScope.launch {
-        while (true) {
-            print("$currentMillis ")
-            delay(250L)
-            currentMillis += 250L
-        }
+        delay(1000L)
+        logNamed("World!")
     }
+    GlobalScope.launch {
+        delay(1000L)
+        logNamed("World!")
+    }
+    log("Hello,")
+    // delay(2000L)
+    /*
+Output:
+0 [main] Hello,
+     */
+}
+
+/*
+И launch, и async имеют ресивером CoroutineScope, и, следовательно, оба могут вызываться
+на ресивере предоставляемом runBlocking, так что launch становится потомком runBlocking.
+Как родитель runBlocking будет ждать потомков, пока все потомки не завершатся.
+Родитель предоставляет scope своим потомкам, и они вызываются в этом scope.
+runBlocking может быть использован как root корутина.
+ */
+private fun async06exampleStructured() = runBlocking { // this: CoroutineScope
+    launch { // this: CoroutineScope
+        delay(3000L)
+        logNamed("World-1!")
+    }
+    launch { // this: CoroutineScope
+        delay(1000L)
+        logNamed("World-2!")
+    }
+    log("Hello,")
+    /*
+Output:
+0 [main] Hello,
+250 500 750 1000 [main] [null] World-2!
+1250 1500 1750 2000 2250 2500 2750 [main] [null] World-1!
+     */
 }
