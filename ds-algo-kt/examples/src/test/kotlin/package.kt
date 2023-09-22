@@ -1,1 +1,1 @@
-package learn.algo.dsalgokt.examples
+package learn.algo.dsalgokt
