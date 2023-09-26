@@ -40,3 +40,12 @@
   * [DoubleStack implementation example](examples/src/main/kotlin/ch05queues/DoubleStackQueue.kt)
   * [DoubleStack implementation todo](examples/src/main/kotlin/ch05queues/DoubleStackQueueTodo.kt)
   * [test](examples/src/test/kotlin/ch05queues/QueueBaseTest.kt)
+* Trees
+  * Depth first traversal
+    * [Example](examples/src/main/kotlin/ch06trees/DepthFirstTraversal.kt)
+    * [Todo](examples/src/main/kotlin/ch06trees/DepthFirstTraversalTodo.kt)
+  * Level order traversal
+    * [Example](examples/src/main/kotlin/ch06trees/LevelOrderTraversal.kt)
+    * [Todo](examples/src/main/kotlin/ch06trees/LevelOrderTraversalTodo.kt)
+  * [base test](examples/src/test/kotlin/ch06trees/TraversalBaseTest.kt)
+  
