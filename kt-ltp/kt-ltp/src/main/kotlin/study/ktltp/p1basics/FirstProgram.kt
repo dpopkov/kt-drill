@@ -1,10 +1,51 @@
 package study.ktltp.p1basics
 
+import kotlinx.coroutines.*
 import javax.swing.ImageIcon
 import javax.swing.JFrame
 import javax.swing.SwingUtilities
+import kotlin.time.Duration.Companion.milliseconds
+
+private val zeroTime = System.currentTimeMillis()
+private fun log(message: Any?) =
+    println("${System.currentTimeMillis() - zeroTime} [${Thread.currentThread().name}] $message")
+
+private suspend fun performBackgroundOperation(): String {
+    log("in performBackgroundOperation")
+    delay(100.milliseconds)
+    return "result"
+}
+
+private fun updateUI(result: String) {
+    log("in updateUI with result=$result")
+}
 
 fun main() {
+    // Run with: -Dkotlinx.coroutines.debug
+    runBlocking {
+        log("in runBlocking")
+        launch(Dispatchers.Default) {
+            log("in launch")
+            val result = performBackgroundOperation()
+            withContext(Dispatchers.Main) {
+                updateUI(result)
+            }
+            log("end launch")
+        }
+        log("end runBlocking")
+    }
+    log("start SwingUtilities.invokeLater...")
+    /*
+Output:
+74 [main @coroutine#1] in runBlocking
+81 [main @coroutine#1] end runBlocking
+81 [DefaultDispatcher-worker-1 @coroutine#2] in launch
+82 [DefaultDispatcher-worker-1 @coroutine#2] in performBackgroundOperation
+323 [AWT-EventQueue-0 @coroutine#2] in updateUI with result=result
+323 [DefaultDispatcher-worker-1 @coroutine#2] end launch
+323 [main] start SwingUtilities.invokeLater...
+     */
+
     SwingUtilities.invokeLater { FirstProgram().doLaunch() }
 }
 
