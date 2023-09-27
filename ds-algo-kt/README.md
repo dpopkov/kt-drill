@@ -48,4 +48,7 @@
     * [Example](examples/src/main/kotlin/ch06trees/LevelOrderTraversal.kt)
     * [Todo](examples/src/main/kotlin/ch06trees/LevelOrderTraversalTodo.kt)
   * [base test](examples/src/test/kotlin/ch06trees/TraversalBaseTest.kt)
+* Binary Trees
+  * [Convert binary tree to text diagram](common/src/main/kotlin/IBinaryNode.kt)
+  * [test](common/src/test/kotlin/ITestNodeDiagramTest.kt)
   
