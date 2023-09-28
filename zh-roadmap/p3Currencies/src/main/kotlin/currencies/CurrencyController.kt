@@ -1,5 +1,6 @@
 package learn.zhroadmap.p3currencies.currencies
 
+import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
@@ -17,15 +18,18 @@ class CurrencyController(
     @GetMapping("/{code}")
     fun getByCode(@PathVariable("code") code: String): ResponseEntity<CurrencyDto> {
         val currency = currencyService.getByCode(code)
-        return if (currency != null) {
-            ResponseEntity.ok(currency)
-        } else {
-            ResponseEntity.notFound().build()
-        }
+        return ResponseEntity.ofNullable(currency)
     }
 
-    @PostMapping
+    // Create currency with JSON
+    /*@PostMapping
     fun create(@RequestBody currency: CurrencyDto): ResponseEntity<CurrencyDto> {
+        return ResponseEntity.ok(currencyService.create(currency))
+    }*/
+
+    // Create currency with Form Data
+    @PostMapping(consumes = [MediaType.APPLICATION_FORM_URLENCODED_VALUE])
+    fun create(currency: CurrencyDto): ResponseEntity<CurrencyDto> {
         return ResponseEntity.ok(currencyService.create(currency))
     }
 }
