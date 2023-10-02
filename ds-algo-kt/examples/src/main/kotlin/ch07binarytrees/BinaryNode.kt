@@ -11,7 +11,7 @@ class BinaryNode<T>(
     override fun toString(): String = asDiagram()
 }
 
-typealias Visitor<T> = (BinaryNode<T>) -> Unit
+typealias Visitor<T> = (IBinaryNode<T>) -> Unit
 
 /**
  * Строит двоичное дерево послойно из переданных значений.

@@ -51,4 +51,7 @@
 * Binary Trees
   * [Convert binary tree to text diagram](common/src/main/kotlin/IBinaryNode.kt)
   * [test](common/src/test/kotlin/ITestNodeDiagramTest.kt)
-  
+  * Traversal algorithms
+    * [In-order](examples/src/main/kotlin/ch07binarytrees/InOrderTraversal.kt)
+    * [Pre-order](examples/src/main/kotlin/ch07binarytrees/PreOrderTraversal.kt)
+    * [Post-order](examples/src/main/kotlin/ch07binarytrees/PostOrderTraversal.kt)
