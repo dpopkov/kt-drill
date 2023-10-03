@@ -15,11 +15,8 @@ class ExchangeRateController(
     }
 
     @GetMapping("/exchangeRates/{codes}")
-    fun getByCodes(@PathVariable("codes") codes: String): ResponseEntity<ExchangeRateDto> {
-        if (codes.length != 6) return ResponseEntity.badRequest().build()
-        val codeOfBase = codes.substring(0, 3)
-        val codeOfTarget = codes.substring(3)
-        val rate = exchangeRateService.getByCodes(codeOfBase, codeOfTarget)
+    fun getByCodes(@PathVariable("codes") codes: PairOfCodes): ResponseEntity<ExchangeRateDto> {
+        val rate = exchangeRateService.getByCodes(codes.codeOfBase, codes.codeOfTarget)
         return ResponseEntity.ofNullable(rate)
     }
 
@@ -30,11 +27,8 @@ class ExchangeRateController(
     }
 
     @PatchMapping(value = ["/exchangeRate/{codes}"], consumes = [MediaType.APPLICATION_FORM_URLENCODED_VALUE])
-    fun updateRate(@PathVariable("codes") codes: String, rate: BigDecimal): ResponseEntity<ExchangeRateDto> {
-        if (codes.length != 6) return ResponseEntity.badRequest().build()
-        val codeOfBase = codes.substring(0, 3)
-        val codeOfTarget = codes.substring(3)
-        val updated = exchangeRateService.updateRate(codeOfBase, codeOfTarget, rate)
+    fun updateRate(@PathVariable("codes") codes: PairOfCodes, rate: BigDecimal): ResponseEntity<ExchangeRateDto> {
+        val updated = exchangeRateService.updateRate(codes.codeOfBase, codes.codeOfTarget, rate)
         return ResponseEntity.ofNullable(updated)
     }
 }
