@@ -10,6 +10,8 @@ repositories {
 }
 
 dependencies {
+    testImplementation(libs.bundles.mockito)
+    testImplementation(libs.assertj)
     testImplementation(kotlin("test"))
 }
 
