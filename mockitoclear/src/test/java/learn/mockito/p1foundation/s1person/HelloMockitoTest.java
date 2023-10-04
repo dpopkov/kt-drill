@@ -1,4 +1,4 @@
-package learn.mockito.p1foundation;
+package learn.mockito.p1foundation.s1person;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

@@ -1,4 +1,4 @@
-package learn.mockito.p1foundation;
+package learn.mockito.p1foundation.s1person;
 
 public class Person {
     private final String first;
