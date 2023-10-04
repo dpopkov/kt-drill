@@ -15,18 +15,18 @@ import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class HelloMockitoTest {
+class JHelloMockitoTest {
     @Mock
-    private PersonRepository personRepository;
+    private JPersonRepository personRepository;
     @Mock
-    private TranslationService translationService;
+    private JTranslationService translationService;
     @InjectMocks
-    private HelloMockito helloMockito;
+    private JHelloMockito helloMockito;
 
     @Test
     void greetPersonThatExists() {
         when(personRepository.findById(anyInt()))
-                .thenReturn(Optional.of(new Person("Grace")));
+                .thenReturn(Optional.of(new JPerson("Grace")));
         when(translationService
                 .translate("Hello, Grace, from Mockito!", "en", "en"))
                 .thenReturn("Hello, Grace, from Mockito!");

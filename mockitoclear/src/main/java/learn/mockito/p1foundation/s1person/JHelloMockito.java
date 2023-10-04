@@ -2,21 +2,21 @@ package learn.mockito.p1foundation.s1person;
 
 import java.util.Optional;
 
-public class HelloMockito {
+public class JHelloMockito {
     @SuppressWarnings("FieldCanBeLocal")
     private final String greeting = "Hello, %s, from Mockito!";
 
-    private final PersonRepository personRepository;
-    private final TranslationService translationService;
+    private final JPersonRepository personRepository;
+    private final JTranslationService translationService;
 
-    public HelloMockito(PersonRepository personRepository, TranslationService translationService) {
+    public JHelloMockito(JPersonRepository personRepository, JTranslationService translationService) {
         this.personRepository = personRepository;
         this.translationService = translationService;
     }
 
     public String greet(int id, String sourceLang, String targetLang) {
-        Optional<Person> person = personRepository.findById(id);
-        String name = person.map(Person::getFirst).orElse("World");
+        Optional<JPerson> person = personRepository.findById(id);
+        String name = person.map(JPerson::first).orElse("World");
         return translationService.translate(String.format(greeting, name), sourceLang, targetLang);
     }
 }
