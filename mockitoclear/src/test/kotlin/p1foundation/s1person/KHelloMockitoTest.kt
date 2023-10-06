@@ -25,7 +25,7 @@ class KHelloMockitoTest {
     @Test
     fun greetPersonThatExists() {
         `when`(personRepository.findById(anyInt()))
-            .thenReturn(Optional.of(KPerson("Grace")))
+            .thenReturn(Optional.of(KPerson(first = "Grace")))
         `when`(translationService.translate("Hello, Grace, from Mockito!", "en", "en"))
             .thenReturn("Hello, Grace, from Mockito!")
 
