@@ -35,3 +35,18 @@
   - `MockitoExtension` обеспечивает **strict stubbings**, при котором допускается мокать только действительно выполняемые вызовы.
   - создание моков и их внедрение в тестируемый класс автоматизировано
   - Mockito не является DI фреймворком, и поэтому не должен использоваться для внедрения сложных графов
+
+### 2.2 - Setting Expectations
+- Установка ожиданий методами `when` и `thenReturn`, `thenThrow`, `thenAnswer`
+  - `publis static <T> OngoingStubbing<T> when(T methodCall)`
+  - `OngoingStubbing<T> thenReturn(T value)` - задает результат одного вызова
+  - `OngoingStubbing<T> thenReturn(T value, T... values)` - задает результаты нескольких вызовов
+  - методы `thenReturn`, `thenThrow`, `thenAnswer` могут вызываться последовательно и в любом порядке
+- Проверка Multiplicity
+  - `publis static <T> T verify(T mock, org.mockito.verification.VerificationMode mode)`
+  - 2-й параметр генерируется методами `times(int), never(), atLeastOnce(), atLeast(int), atMostOnce(), atMost(int)`
+  - значением по умолчанию является `times(1)`
+- Мокирование методов возвращающих void
+  - для методов возвращающих void использование синтаксиса `when/then` невозможно
+  - следует использовать `doThrow, doReturn, doAnswer, doNothing, doCallRealMethod`:
+    - `doThrow(RuntimeException.class).when(personRepository).delete(null)`

@@ -8,7 +8,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -73,5 +75,70 @@ class JPersonServiceTest {
 
         assertThat(lastNames).contains(allLastNames);
         verify(personRepository).findAll();
+    }
+
+    @Test
+    void findByIds_explicitWhens() {
+        /* Множество вызовов thenReturn может быть заменено на один вызов с vararg аргументами */
+        when(personRepository.findById(1))
+                .thenReturn(Optional.of(people.get(0)));
+        when(personRepository.findById(2))
+                .thenReturn(Optional.of(people.get(1)));
+        when(personRepository.findById(3))
+                .thenReturn(Optional.of(people.get(2)));
+        when(personRepository.findById(14))
+                .thenReturn(Optional.of(people.get(3)));
+        when(personRepository.findById(5))
+                .thenReturn(Optional.of(people.get(4)));
+
+        var persons = personService.findByIds(1, 2, 3, 14, 5);
+
+        assertThat(persons).containsExactlyElementsOf(people);
+        verify(personRepository, times(5)).findById(anyInt());
+    }
+
+    @Test
+    void findByIds_usingSequenceOfThenReturns() {
+        when(personRepository.findById(anyInt()))
+                .thenReturn(Optional.of(people.get(0)))
+                .thenReturn(Optional.of(people.get(1)))
+                .thenReturn(Optional.of(people.get(2)))
+                .thenReturn(Optional.of(people.get(3)))
+                .thenReturn(Optional.of(people.get(4)))
+                .thenReturn(Optional.empty());
+
+        var persons = personService.findByIds(1, 2, 3, 14, 5);
+
+        assertThat(persons).containsExactlyElementsOf(people);
+        verify(personRepository, times(5)).findById(anyInt());
+    }
+
+    @SuppressWarnings("unchecked")
+    @Test
+    void findByIds_thenReturnWithMultipleArgs() {
+        when(personRepository.findById(anyInt()))
+                .thenReturn(
+                        Optional.of(people.get(0)),
+                        Optional.of(people.get(1)),
+                        Optional.of(people.get(2)),
+                        Optional.of(people.get(3)),
+                        Optional.of(people.get(4)),
+                        Optional.empty() // возвращается для 6-го и всех последующих вызовов
+                );
+
+        var persons = personService.findByIds(1, 2, 3, 14, 5);
+
+        assertThat(persons).containsExactlyElementsOf(people);
+        verify(personRepository, times(5)).findById(anyInt());
+    }
+
+    @SuppressWarnings("ArraysAsListWithZeroOrOneArgument")
+    @Test
+    void deleteAllWithNulls() {
+        when(personRepository.findAll()).thenReturn(Arrays.asList((JPerson) null));
+        doThrow(RuntimeException.class).when(personRepository).delete(null);
+
+        assertThrows(RuntimeException.class, () -> personService.deleteAll());
+        verify(personRepository).delete(null);
     }
 }
