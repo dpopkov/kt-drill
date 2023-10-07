@@ -50,3 +50,10 @@
   - для методов возвращающих void использование синтаксиса `when/then` невозможно
   - следует использовать `doThrow, doReturn, doAnswer, doNothing, doCallRealMethod`:
     - `doThrow(RuntimeException.class).when(personRepository).delete(null)`
+- Проверка вложенных exceptions:
+  ```java
+  assertThatExceptionOfType(RuntimeException.class)
+                  .isThrownBy(() -> service.getAstroData())
+                  .withCauseInstanceOf(IOException.class)
+                  .withMessageContaining("Network problems");
+  ```
