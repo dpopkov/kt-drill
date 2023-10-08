@@ -81,3 +81,19 @@
   - `and, or, not` - для комбинирования
   - `lt, leq, gt, geq` - для сравнения
   - также matchers для сравнения массивов
+
+### 3.2 - Creating Custom Argument Matchers
+- `ArgumentMatchers` содержит метод `argThat`, который принимает `ArgumentMatcher`
+- `ArgumentMatcher` имеет единственный метод:
+  - `boolean matches(T argument)`
+- Using Argument Matchers для примитивных типов
+  - для примитивов вместо `argThat` следует использовать специализированные методы:
+  - `byteThat, shortThat, charThat, intThat, longThat, floatThat, doubleThat, booleanThat`
+
+### 3.3 - Verifying the Order of Methods Called
+- `org.mockito.InOrder` позволяет проверить что метод одного стаба вызывался раньше метода другого стаба.
+  - `InOrder inOrder = inOrder(firstMock, secondMock);`
+  - `inOrder.verify(firstMock).add("was called first");`
+  - `inOrder.verify(secondMock).add("was called second");`
+  - [example in JHelloMockitoTest](src/test/java/learn/mockito/p1foundation/s1person/JHelloMockitoTest.java)
+  - [example in KHelloMockitoTest](src/test/kotlin/p1foundation/s1person/KHelloMockitoTest.kt)

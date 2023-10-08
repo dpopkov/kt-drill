@@ -3,6 +3,7 @@ package learn.mockito.p2api.s3astro
 import learn.mockito.p1foundation.s1person.KPerson
 import learn.mockito.p1foundation.s1person.KPersonRepository
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.extension.ExtendWith
@@ -65,9 +66,22 @@ class KPersonServiceTest {
                 people[0],
                 people[3],
             ))
-        doNothing().`when`(personRepository).delete(people[0]);
-        doThrow(RuntimeException::class.java).`when`(personRepository).delete(people[3]);
+        doNothing().`when`(personRepository).delete(people[0])
+        doThrow(RuntimeException::class.java).`when`(personRepository).delete(people[3])
 
         assertThrows<RuntimeException> { personService.deleteAll() }
+    }
+
+    @Test
+    fun findByIdThatDoesNotExist_usingCustomMatcher() {
+        // val greaterThan14 = { id: Int -> id > 14 }
+        // `when`(personRepository.findById(intThat(greaterThan14)))
+        `when`(personRepository.findById(intThat { it > 14 }))
+            .thenReturn(Optional.empty())
+
+        val persons = personService.findByIds(15, 42, 78, 123)
+
+        assertTrue(persons.isEmpty())
+        verify(personRepository, times(4)).findById(anyInt())
     }
 }

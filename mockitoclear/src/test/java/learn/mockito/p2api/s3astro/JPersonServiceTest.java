@@ -152,4 +152,15 @@ class JPersonServiceTest {
         assertTrue(persons.isEmpty());
         verify(personRepository).findById(anyInt());
     }
+
+    @Test
+    void findByIdThatDoesNotExist_usingCustomMatcher() {
+        when(personRepository.findById(intThat(id -> id > 14)))
+                .thenReturn(Optional.empty());
+
+        var persons = personService.findByIds(15, 42, 78, 123);
+
+        assertTrue(persons.isEmpty());
+        verify(personRepository, times(4)).findById(anyInt());
+    }
 }
