@@ -141,4 +141,15 @@ class JPersonServiceTest {
         assertThrows(RuntimeException.class, () -> personService.deleteAll());
         verify(personRepository).delete(null);
     }
+
+    @Test
+    void findByIdThatDoesNotExist() {
+        when(personRepository.findById(anyInt()))
+                .thenReturn(Optional.empty());
+        
+        var persons = personService.findByIds(123);
+
+        assertTrue(persons.isEmpty());
+        verify(personRepository).findById(anyInt());
+    }
 }

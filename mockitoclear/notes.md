@@ -62,3 +62,22 @@
 ## 3 - Use Built-in and Custom Matchers
 
 ### 3.1 - Using the Existing Argument Matchers
+- Методы типа `anyInt()` могут применяться и при установке ожиданий, и при проверке.
+- методы для
+  - примитивов: `anyByte, anyShort, anyInt, anyLong, anyFloat, anyDouble, anyChar, anyBoolean`
+  - коллекций: `anyCollection, anyList, anySet, anyMap`
+  - строк: `anyString, startsWith, endsWith, matches(String), matches(Pattern)`
+  - nulls: `isNull, isNotNull, notNull, nullable(Class)`
+  - типов: `isA(Class), any(Class)`
+  - всего, включая nulls и varargs: `any`
+- Using the `eq` Matchers
+  - Если вы stubbing метод принимающий более одного аргумента и используете argument matcher для одного из них,
+  - то вы **обязаны использовать argument matchers для всех из них**:
+    - так нельзя:
+      - `verify(mock).someMethod(anyInt(), anyString(), "3rd argument")`
+    - нужно так:
+      - `verify(mock).someMethod(anyInt(), anyString(), eq("3rd argument"))`
+- Дополнительные matchers в классе `AdditionalMatchers`
+  - `and, or, not` - для комбинирования
+  - `lt, leq, gt, geq` - для сравнения
+  - также matchers для сравнения массивов
