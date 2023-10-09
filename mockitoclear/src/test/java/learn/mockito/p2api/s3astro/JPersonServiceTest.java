@@ -4,10 +4,13 @@ import learn.mockito.p1foundation.s1person.JPerson;
 import learn.mockito.p1foundation.s1person.JPersonRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -24,8 +27,11 @@ class JPersonServiceTest {
     @InjectMocks
     private JPersonService personService;
 
+    @Captor
+    private ArgumentCaptor<JPerson> personCaptor;
+
     private final List<JPerson> people = List.of(
-            new JPerson(1, "Grace", "Hopper"),
+            new JPerson(1, "Grace", "Hopper", LocalDate.parse("1906-12-09")),
             new JPerson(2, "Ada", "Lovelace"),
             new JPerson(3, "Adele", "Goldberg"),
             new JPerson(14, "Anita", "Borg"),
@@ -162,5 +168,17 @@ class JPersonServiceTest {
 
         assertTrue(persons.isEmpty());
         verify(personRepository, times(4)).findById(anyInt());
+    }
+
+    @Test
+    void createPersonUsingDateString() {
+        JPerson hopper = people.get(0);
+        when(personRepository.save(hopper)).thenReturn(hopper);
+
+        JPerson actual = personService.createPerson(1, "Grace", "Hopper", "1906-12-09");
+
+        verify(personRepository).save(personCaptor.capture());
+        assertThat(personCaptor.getValue()).isEqualTo(hopper);
+        assertThat(actual).isEqualTo(hopper);
     }
 }
