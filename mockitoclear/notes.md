@@ -97,3 +97,25 @@
   - `inOrder.verify(secondMock).add("was called second");`
   - [example in JHelloMockitoTest](src/test/java/learn/mockito/p1foundation/s1person/JHelloMockitoTest.java)
   - [example in KHelloMockitoTest](src/test/kotlin/p1foundation/s1person/KHelloMockitoTest.kt)
+
+
+## 4 - Solve Problems with Mockito
+
+### 4.1 - Deciding between Mockito and BDDMockito
+- Mockito: when/thenReturn
+  - `when(repository.findAll()).thenReturn(people);`
+  - `doThrow(RuntimeException.class).when(mock).foo();`
+- BDDMockito: given/willReturn
+  - `given(repository.findAll()).willReturn(people);`
+  - `willThrow(new RuntimeException()).given(mock).foo();`
+- Mockito: verify
+  - `verify(repository).findAll();`
+- BDDMockito: then/should
+  - `then(repository).should().findAll();`
+  - `then(repository).should(times(1)).findAll();`
+
+### 4.2 - Testing void Methods Using Interactions
+- Для проверки взаимодействия для участвующих во взаимодействии компонентов создают моки (метод `mock`).
+- Связывание этих компонентов производится вручную, без использования аннотаций.
+- Метод `verify` позволяет убедиться, что на моке был вызван нужный метод нужное кол-во раз.
+- Метод `argThat` позволяет использовать custom matchers, в том числе с регулярными выражениями.
