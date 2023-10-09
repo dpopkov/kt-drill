@@ -129,3 +129,8 @@
   - `verify(repository).save(personArg.capture());`
 - Перехваченные данные получают с помощью `getValue()`:
   - `assertThat(personArg.getValue()).isEqualTo(hopper);`
+
+### Проблема с использованием методов Mockito совместно с non-nullable параметрами Kotlin
+- Для обхода проблемы с non-nullable параметрами Kotlin приходится использовать доп. функции типа:
+  - `fun <T> ArgumentCaptor<T>.captureK(): T = this.capture()`
+  - Использовать в случае, если результат capture передается в метод принимающий аргумент non-nullable типа.

@@ -2,6 +2,7 @@ package learn.mockito.p2api.s3astro
 
 import learn.mockito.p1foundation.s1person.KPerson
 import learn.mockito.p1foundation.s1person.KPersonRepository
+import java.time.LocalDate
 import java.util.Optional
 
 class KPersonService(
@@ -19,5 +20,10 @@ class KPersonService(
 
     fun deleteAll() {
         personRepository.findAll().forEach { personRepository.delete(it) }
+    }
+
+    fun createPerson(id: Int, first: String, last: String, dateOfBirth: String): KPerson {
+        val person = KPerson(id, first, last, LocalDate.parse(dateOfBirth))
+        return personRepository.save(person)
     }
 }

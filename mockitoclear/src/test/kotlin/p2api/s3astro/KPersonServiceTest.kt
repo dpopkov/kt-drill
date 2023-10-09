@@ -7,12 +7,15 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.extension.ExtendWith
+import org.mockito.ArgumentCaptor
 import org.mockito.ArgumentMatchers.anyInt
+import org.mockito.Captor
 import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.Mockito.*
 import org.mockito.internal.verification.VerificationModeFactory.times
 import org.mockito.junit.jupiter.MockitoExtension
+import java.time.LocalDate
 import java.util.*
 
 @ExtendWith(MockitoExtension::class)
@@ -21,9 +24,11 @@ class KPersonServiceTest {
     private lateinit var personRepository: KPersonRepository
     @InjectMocks
     private lateinit var personService: KPersonService
+    @Captor
+    private lateinit var personCaptor: ArgumentCaptor<KPerson>
 
     private val people = listOf(
-        KPerson(1, "Grace", "Hopper"),
+        KPerson(1, "Grace", "Hopper", LocalDate.parse("1906-12-09")),
         KPerson(2, "Ada", "Lovelace"),
         KPerson(3, "Adele", "Goldberg"),
         KPerson(14, "Anita", "Borg"),
@@ -83,5 +88,24 @@ class KPersonServiceTest {
 
         assertTrue(persons.isEmpty())
         verify(personRepository, times(4)).findById(anyInt())
+    }
+
+    /**
+     * Необходим для обхода проблемы с non-nullable параметрами Kotlin.
+     * Нужно использовать в случае, если результат capture передается в метод,
+     * принимающий аргумент non-nullable типа.
+     */
+    private fun <T> ArgumentCaptor<T>.captureK(): T = this.capture()
+
+    @Test
+    fun `create Person using Date String`() {
+        val hopper = people[0]
+        `when`(personRepository.save(hopper)).thenReturn(hopper)
+
+        val actual = personService.createPerson(1, "Grace", "Hopper", "1906-12-09")
+
+        verify(personRepository).save(personCaptor.captureK())
+        assertThat(personCaptor.value).isEqualTo(hopper)
+        assertThat(actual).isEqualTo(hopper)
     }
 }
