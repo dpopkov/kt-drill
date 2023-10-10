@@ -181,4 +181,36 @@ class JPersonServiceTest {
         assertThat(personCaptor.getValue()).isEqualTo(hopper);
         assertThat(actual).isEqualTo(hopper);
     }
+
+    @Test
+    void saveAllPeople_usingThenReturn() {
+        when(personRepository.save(any(JPerson.class)))
+                .thenReturn(people.get(0),
+                        people.get(1),
+                        people.get(2),
+                        people.get(3),
+                        people.get(4));
+
+        var actualIds = personService.savePeople(people.toArray(JPerson[]::new));
+
+        assertEquals(List.of(1, 2, 3, 14, 5), actualIds);
+        verify(personRepository, times(people.size())).save(any(JPerson.class));
+        verify(personRepository, never()).delete(any(JPerson.class));
+    }
+
+    @Test
+    void saveAllPeople_usingThenAnswer() {
+        when(personRepository.save(any(JPerson.class)))
+                // заставляет вернуть свой первый (и единственный) аргумент - объект JPerson
+                .thenAnswer(invocation -> invocation.getArgument(0));
+
+        var actualIds = personService.savePeople(people.toArray(JPerson[]::new));
+
+        var expectedIds = people.stream()
+                .map(JPerson::id)
+                .toList();
+        assertEquals(expectedIds, actualIds);
+        verify(personRepository, times(people.size())).save(any(JPerson.class));
+        verify(personRepository, never()).delete(any(JPerson.class));
+    }
 }

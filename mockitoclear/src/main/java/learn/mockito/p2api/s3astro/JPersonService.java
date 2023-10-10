@@ -43,4 +43,11 @@ public class JPersonService {
         JPerson person = new JPerson(id, first, last, LocalDate.parse(dateOfBirth));
         return personRepository.save(person);
     }
+
+    public List<Integer> savePeople(JPerson... people) {
+        return Arrays.stream(people)
+                .map(personRepository::save)
+                .map(JPerson::id)
+                .toList();
+    }
 }

@@ -134,3 +134,13 @@
 - Для обхода проблемы с non-nullable параметрами Kotlin приходится использовать доп. функции типа:
   - `fun <T> ArgumentCaptor<T>.captureK(): T = this.capture()`
   - Использовать в случае, если результат capture передается в метод принимающий аргумент non-nullable типа.
+
+### 4.4 - Setting Outputs Based on Inputs with Custom Answers
+- Используется интерфейс `Answer`.
+- Custom answers позволяют указать как вывод мокированного метода базируется на его вводе.
+- Вместо вызова `thenReturn` используется `thenAnswer`.
+- Ключевым для данного примера является метод `InvokationOnMock.getArgument(int index)`,
+- который возвращает аргумент по заданному индексу, то есть для единственного аргумента индекс будет 0.
+- Например, можно вернуть тот же объект, который был передан на входе, вызывая `getArgument(0)`:
+  - `when(personRepository.save(any(JPerson.class)))`
+  - `    .thenAnswer(invocation -> invocation.getArgument(0));`
