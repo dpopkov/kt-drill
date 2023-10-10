@@ -7,4 +7,8 @@ data class KPerson(
     val first: String,
     val last: String? = null,
     val dob: LocalDate? = null,
-)
+) {
+    companion object {
+        val defaultDummy = KPerson(first = "default-dummy")
+    }
+}

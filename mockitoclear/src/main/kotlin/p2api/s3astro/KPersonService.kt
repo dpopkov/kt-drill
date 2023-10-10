@@ -26,4 +26,8 @@ class KPersonService(
         val person = KPerson(id, first, last, LocalDate.parse(dateOfBirth))
         return personRepository.save(person)
     }
+
+    fun savePeople(vararg people: KPerson): List<Int> {
+        return people.map(personRepository::save).mapNotNull(KPerson::id)
+    }
 }

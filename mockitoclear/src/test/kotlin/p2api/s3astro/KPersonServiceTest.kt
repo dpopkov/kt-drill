@@ -3,7 +3,7 @@ package learn.mockito.p2api.s3astro
 import learn.mockito.p1foundation.s1person.KPerson
 import learn.mockito.p1foundation.s1person.KPersonRepository
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.extension.ExtendWith
@@ -107,5 +107,43 @@ class KPersonServiceTest {
         verify(personRepository).save(personCaptor.captureK())
         assertThat(personCaptor.value).isEqualTo(hopper)
         assertThat(actual).isEqualTo(hopper)
+    }
+
+    /**
+     * Применяется, чтобы уйти от платформенного типа <code>KPerson!</code>
+     * и избежать ошибки с приходом nullable значения.
+     */
+    private fun anyPerson(): KPerson = any(KPerson::class.java) ?: KPerson.defaultDummy
+
+    @Test
+    fun `saveAllPeople - using thenReturn`() {
+        `when`(personRepository.save(anyPerson()))
+            .thenReturn(
+                people[0],
+                people[1],
+                people[2],
+                people[3],
+                people[4],
+            )
+
+        val actualIds = personService.savePeople(*people.toTypedArray<KPerson>())
+
+        val expectedIds = people.map(KPerson::id)
+        assertEquals(expectedIds, actualIds)
+        verify(personRepository, times(people.size)).save(anyPerson())
+        verify(personRepository, never()).delete(anyPerson())
+    }
+
+    @Test
+    fun `saveAllPeople - using thenAnswer`() {
+        `when`(personRepository.save(anyPerson()))
+            .thenAnswer { it.getArgument<KPerson>(0) }
+
+        val actualIds = personService.savePeople(*people.toTypedArray<KPerson>())
+
+        val expectedIds = people.map(KPerson::id)
+        assertEquals(expectedIds, actualIds)
+        verify(personRepository, times(people.size)).save(anyPerson())
+        verify(personRepository, never()).delete(anyPerson())
     }
 }
