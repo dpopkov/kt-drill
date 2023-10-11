@@ -146,4 +146,27 @@ class KPersonServiceTest {
         verify(personRepository, times(people.size)).save(anyPerson())
         verify(personRepository, never()).delete(anyPerson())
     }
+
+    @Test
+    fun `testInMemoryPersonRepository without using Spy`() {
+        val repo: KPersonRepository = KInMemoryPersonRepository()
+        val service = KPersonService(repo)
+
+        service.savePeople(*people.toTypedArray())
+
+        assertThat(repo.findAll()).isEqualTo(people)
+    }
+
+    @Test
+    fun `testInMemoryPersonRepository using Spy`() {
+        val inMemoryRepo = KInMemoryPersonRepository()
+        val repo: KPersonRepository = spy(inMemoryRepo)
+        val service = KPersonService(repo)
+
+        service.savePeople(*people.toTypedArray())
+
+        assertThat(repo.findAll()).isEqualTo(people)
+        assertThat(inMemoryRepo.findAll()).isEqualTo(people)
+        verify(repo, times(people.size)).save(anyPerson())
+    }
 }
