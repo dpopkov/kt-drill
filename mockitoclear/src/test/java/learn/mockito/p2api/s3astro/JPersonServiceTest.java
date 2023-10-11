@@ -213,4 +213,27 @@ class JPersonServiceTest {
         verify(personRepository, times(people.size())).save(any(JPerson.class));
         verify(personRepository, never()).delete(any(JPerson.class));
     }
+
+    @Test
+    void testInMemoryPersonRepository_withoutSpying() {
+        JPersonRepository repository = new JInMemoryPersonRepository();
+        JPersonService service = new JPersonService(repository);
+
+        service.savePeople(people.toArray(JPerson[]::new));
+
+        assertThat(repository.findAll()).isEqualTo(people);
+    }
+
+    @Test
+    void testInMemoryPersonRepository_spying() {
+        JPersonRepository inMemoryRepo = new JInMemoryPersonRepository();
+        JPersonRepository repository = spy(inMemoryRepo);
+        JPersonService service = new JPersonService(repository);
+
+        service.savePeople(people.toArray(JPerson[]::new));
+
+        assertThat(repository.findAll()).isEqualTo(people);
+        assertThat(inMemoryRepo.findAll()).isEqualTo(people);
+        verify(repository, times(people.size())).save(any(JPerson.class));
+    }
 }

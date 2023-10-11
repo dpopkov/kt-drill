@@ -144,3 +144,14 @@
 - Например, можно вернуть тот же объект, который был передан на входе, вызывая `getArgument(0)`:
   - `when(personRepository.save(any(JPerson.class)))`
   - `    .thenAnswer(invocation -> invocation.getArgument(0));`
+
+### 4.5 - Spying to Verify Interactions
+- Spy это объект обертывающий настоящий экземпляр зависимости,
+- что позволяет отследить взаимодействия между тестируемым классом и этим компонентом-зависимостью:
+  - можно перехватить вызовы для верификации;
+  - можно мокировать некоторые методы зависимости вместо всех - это называется partial mock.
+- Для заворачивания в spy достаточно использовать метод `Mockito.spy()`:
+  - `JPersonRepository repository = spy(new JInMemoryPersonRepository());`
+- Проверки проводятся стандартно:
+  - `verify(repository, times(people.size())).save(any(JPerson.class));`
+- Есть возможность делать partial spy, но это может вызывать проблемы с состоянием.
