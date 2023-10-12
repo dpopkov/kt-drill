@@ -3,7 +3,8 @@ package learn.mockito.p2api.s3astro
 import learn.mockito.p1foundation.s1person.KPerson
 import learn.mockito.p1foundation.s1person.KPersonRepository
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.extension.ExtendWith
@@ -168,5 +169,19 @@ class KPersonServiceTest {
         assertThat(repo.findAll()).isEqualTo(people)
         assertThat(inMemoryRepo.findAll()).isEqualTo(people)
         verify(repo, times(people.size)).save(anyPerson())
+    }
+
+    @Test
+    fun testMockOfFinal() {
+        // В Kotlin классы по умолчанию final
+        val repo = mock(KInMemoryPersonRepository::class.java)
+        `when`(repo.save(anyPerson()))
+            .thenAnswer { it.getArgument<KPerson>(0) }
+        val service = KPersonService(repo)
+
+        val ids = service.savePeople(*people.toTypedArray())
+
+        assertThat(ids).containsExactly(1, 2, 3, 14, 5)
+        verify(repo, times(5)).save(anyPerson())
     }
 }

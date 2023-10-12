@@ -155,3 +155,11 @@
 - Проверки проводятся стандартно:
   - `verify(repository, times(people.size())).save(any(JPerson.class));`
 - Есть возможность делать partial spy, но это может вызывать проблемы с состоянием.
+
+
+## 5 - Use Mockito in Special Cases
+
+### 5.1 - Mocking Final Classes and Methods
+- До Mockito 5 нужно было либо добавлять `mockito-extensions`, либо заменять `mockito-core` на `mockito-inline`.
+- Начиная с Mockito 5 возможность мокировать final интегрирована в Mockito core.
+- При использовании с Java 17, Mockito 5 использует inline capability по умолчанию и старые способы не нужны.

@@ -236,4 +236,18 @@ class JPersonServiceTest {
         assertThat(inMemoryRepo.findAll()).isEqualTo(people);
         verify(repository, times(people.size())).save(any(JPerson.class));
     }
+
+    @Test
+    void testMockOfFinalMethods() {
+        JInMemoryPersonRepository repository = mock(JInMemoryPersonRepository.class);
+        when(repository.save(any(JPerson.class)))
+                .thenAnswer(invocation -> invocation.getArgument(0));
+
+        JPersonService service = new JPersonService(repository);
+
+        var ids = service.savePeople(people.toArray(JPerson[]::new));
+
+        assertThat(ids).containsExactly(1, 2, 3, 14, 5);
+        verify(repository, times(5)).save(any(JPerson.class));
+    }
 }

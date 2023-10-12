@@ -19,7 +19,7 @@ public class JInMemoryPersonRepository implements JPersonRepository {
     }
 
     @Override
-    public JPerson save(JPerson person) {
+    public final JPerson save(JPerson person) {
         synchronized (people) {
             people.add(person);
         }
@@ -37,7 +37,7 @@ public class JInMemoryPersonRepository implements JPersonRepository {
     }
 
     @Override
-    public void delete(JPerson person) {
+    public final void delete(JPerson person) {
         synchronized (people) {
             people.remove(person);
         }
