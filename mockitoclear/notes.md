@@ -163,3 +163,13 @@
 - До Mockito 5 нужно было либо добавлять `mockito-extensions`, либо заменять `mockito-core` на `mockito-inline`.
 - Начиная с Mockito 5 возможность мокировать final интегрирована в Mockito core.
 - При использовании с Java 17, Mockito 5 использует inline capability по умолчанию и старые способы не нужны.
+
+### 5.2 - Mocking Static Methods
+- Для мокирования статических методов служит `org.mockito.Mockito.mockStatic`,
+- который вызывается в try-with-resources блоке:
+  - `try(MockedStatic<WikiUtil> mocked = mockStatic(WikiUtil.class))`
+- для установки ожиданий используется лямбда:
+  - `mocked.when(() -> WikiUtil.getWikipediaExtract(anyString()))`
+  - `   .thenAnswer(invocation -> "Bio for " + invocation.getArgument(0));`
+- вызов может быть верифицирован:
+  - `mocked.verify(() -> WikiUtil.getWikipediaExtract(anyString()), times(3));`
