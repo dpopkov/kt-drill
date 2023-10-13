@@ -10,6 +10,7 @@ repositories {
 }
 
 dependencies {
+    implementation(libs.jackson.databind)
     testImplementation(libs.bundles.mockito)
     testImplementation(libs.assertj)
     testImplementation(kotlin("test"))
