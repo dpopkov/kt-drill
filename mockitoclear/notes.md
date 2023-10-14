@@ -173,3 +173,13 @@
   - `   .thenAnswer(invocation -> "Bio for " + invocation.getArgument(0));`
 - вызов может быть верифицирован:
   - `mocked.verify(() -> WikiUtil.getWikipediaExtract(anyString()), times(3));`
+
+### 5.3 - Mocking Constructors
+- Используется `org.mockito. MockedConstruction<T> mockConstruction(classToMock, mockInitializer)`, где
+  - classToMock - мокируемый класс, экземпляр которого локально создается внутри мокируемого конструктора,
+  - mockInitializer - мокирование его поведения, установка ожиданий, например через Answer.
+- Создание экземпляра тестируемого класса производится в try-with-resources блоке
+  - при этом мокируемая локальная зависимость, от которой зависит код внутри конструктора, будет создана автоматически.
+- Вместо `mockConstruction` может быть также использован метод `mockConstructionWithAnswer`
+  - `mockConstructionWithAnswer(ServiceToMock.class, invocation -> invocation.getArgument(0) + " (translated)")`
+- Может быть определено несколько Answer, которые будут возвращаться при последовательных обращениях.
