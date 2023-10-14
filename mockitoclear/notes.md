@@ -1,27 +1,27 @@
 # Mockito Made Clear
 
 - 1 - Build a Testing Foundation
-  - [1.1 - Get Started with Mockito](#11---get-started-with-mockito)
-  - [1.2 - Formal description of the process](#12---formal-description-of-the-process)
+  - [1.1 - Get Started with Mockito](notes.md#11---get-started-with-mockito)
+  - [1.2 - Formal description of the process](notes.md#12---formal-description-of-the-process)
 - 2 - Work with Mockito API
-  - [2.1 - Creating Mocks and Stubs](#21---creating-mocks-and-stubs)
-  - [2.2 - Setting Expectations](#22---setting-expectations)
+  - [2.1 - Creating Mocks and Stubs](notes.md#21---creating-mocks-and-stubs)
+  - [2.2 - Setting Expectations](notes.md#22---setting-expectations)
 - 3 - Use Built-in and Custom Matchers
-  - [3.1 - Using the Existing Argument Matchers](#31---using-the-existing-argument-matchers)
-  - [3.2 - Creating Custom Argument Matchers](#32---creating-custom-argument-matchers)
-  - [3.3 - Verifying the Order of Methods Called](#33---verifying-the-order-of-methods-called)
+  - [3.1 - Using the Existing Argument Matchers](notes.md#31---using-the-existing-argument-matchers)
+  - [3.2 - Creating Custom Argument Matchers](notes.md#32---creating-custom-argument-matchers)
+  - [3.3 - Verifying the Order of Methods Called](notes.md#33---verifying-the-order-of-methods-called)
 - 4 - Solve Problems with Mockito
-  - [4.1 - Deciding between Mockito and BDDMockito](#41---deciding-between-mockito-and-bddmockito)
-  - [4.2 - Testing void Methods Using Interactions](#42---testing-void-methods-using-interactions)
-  - [4.3 - Capturing Arguments](#43---capturing-arguments)
-  - [Using Mockito with Kotlin non-nullable parameters](#using-mockito-with-kotlin-non-nullable-parameters)
-  - [4.4 - Setting Outputs Based on Inputs with Custom Answers](#44---setting-outputs-based-on-inputs-with-custom-answers)
-  - [4.5 - Spying to Verify Interactions](#45---spying-to-verify-interactions)
+  - [4.1 - Deciding between Mockito and BDDMockito](notes.md#41---deciding-between-mockito-and-bddmockito)
+  - [4.2 - Testing void Methods Using Interactions](notes.md#42---testing-void-methods-using-interactions)
+  - [4.3 - Capturing Arguments](notes.md#43---capturing-arguments)
+  - [Using Mockito with Kotlin non-nullable parameters](notes.md#using-mockito-with-kotlin-non-nullable-parameters)
+  - [4.4 - Setting Outputs Based on Inputs with Custom Answers](notes.md#44---setting-outputs-based-on-inputs-with-custom-answers)
+  - [4.5 - Spying to Verify Interactions](notes.md#45---spying-to-verify-interactions)
 - 5 - Use Mockito in Special Cases
-  - [5.1 - Mocking Final Classes and Methods](#51---mocking-final-classes-and-methods)
-  - [5.2 - Mocking Static Methods](#52---mocking-static-methods)
-  - [5.3 - Mocking Constructors](#53---mocking-constructors)
-  - [5.4 - Working with Spring Framework](#54---working-with-spring-framework)
+  - [5.1 - Mocking Final Classes and Methods](notes.md#51---mocking-final-classes-and-methods)
+  - [5.2 - Mocking Static Methods](notes.md#52---mocking-static-methods)
+  - [5.3 - Mocking Constructors](notes.md#53---mocking-constructors)
+  - [5.4 - Working with Spring Framework](notes.md#54---working-with-spring-framework)
 
 ## 1 - Build a Testing Foundation
 
@@ -216,4 +216,4 @@
 - Ожидания от мока устанавливаются обычным образом, через `when` и т.д.
 - Spring также имеет соответствующую аннотацию `@SpyBean`, которая оборачивает существующий компонент.
 
-[Top](#mockito-made-clear)
+[Top](notes.md#mockito-made-clear)
