@@ -1,5 +1,28 @@
 # Mockito Made Clear
 
+- 1 - Build a Testing Foundation
+  - [1.1 - Get Started with Mockito](#11---get-started-with-mockito)
+  - [1.2 - Formal description of the process](#12---formal-description-of-the-process)
+- 2 - Work with Mockito API
+  - [2.1 - Creating Mocks and Stubs](#21---creating-mocks-and-stubs)
+  - [2.2 - Setting Expectations](#22---setting-expectations)
+- 3 - Use Built-in and Custom Matchers
+  - [3.1 - Using the Existing Argument Matchers](#31---using-the-existing-argument-matchers)
+  - [3.2 - Creating Custom Argument Matchers](#32---creating-custom-argument-matchers)
+  - [3.3 - Verifying the Order of Methods Called](#33---verifying-the-order-of-methods-called)
+- 4 - Solve Problems with Mockito
+  - [4.1 - Deciding between Mockito and BDDMockito](#41---deciding-between-mockito-and-bddmockito)
+  - [4.2 - Testing void Methods Using Interactions](#42---testing-void-methods-using-interactions)
+  - [4.3 - Capturing Arguments](#43---capturing-arguments)
+  - [Using Mockito with Kotlin non-nullable parameters](#using-mockito-with-kotlin-non-nullable-parameters)
+  - [4.4 - Setting Outputs Based on Inputs with Custom Answers](#44---setting-outputs-based-on-inputs-with-custom-answers)
+  - [4.5 - Spying to Verify Interactions](#45---spying-to-verify-interactions)
+- 5 - Use Mockito in Special Cases
+  - [5.1 - Mocking Final Classes and Methods](#51---mocking-final-classes-and-methods)
+  - [5.2 - Mocking Static Methods](#52---mocking-static-methods)
+  - [5.3 - Mocking Constructors](#53---mocking-constructors)
+  - [5.4 - Working with Spring Framework](#54---working-with-spring-framework)
+
 ## 1 - Build a Testing Foundation
 
 ### 1.1 - Get Started with Mockito
@@ -12,7 +35,7 @@
   - вызвать тестируемый метод
   - use `org.mockito.InOrder` to verify что методы вызваны в правильном порядке
 
-### 1.2 - Формальное описание процесса
+### 1.2 - Formal description of the process
 1. Создать stubs для замены зависимостей.
 2. Установить ожидания от stubs.
 3. Внедрить stubs в тестируемый класс.
@@ -130,7 +153,7 @@
 - Перехваченные данные получают с помощью `getValue()`:
   - `assertThat(personArg.getValue()).isEqualTo(hopper);`
 
-### Проблема с использованием методов Mockito совместно с non-nullable параметрами Kotlin
+### Using Mockito with Kotlin non-nullable parameters
 - Для обхода проблемы с non-nullable параметрами Kotlin приходится использовать доп. функции типа:
   - `fun <T> ArgumentCaptor<T>.captureK(): T = this.capture()`
   - Использовать в случае, если результат capture передается в метод принимающий аргумент non-nullable типа.
@@ -183,3 +206,14 @@
 - Вместо `mockConstruction` может быть также использован метод `mockConstructionWithAnswer`
   - `mockConstructionWithAnswer(ServiceToMock.class, invocation -> invocation.getArgument(0) + " (translated)")`
 - Может быть определено несколько Answer, которые будут возвращаться при последовательных обращениях.
+
+### 5.4 - Working with Spring Framework
+- Spring имеет поддержку Mockito с самого начала.
+- Spring предоставляет аннотацию `@MockBean`, которая:
+  - создает mock объект, заменяя собой аннотацию `@Mock`,
+  - подставляет этот mock везде в ApplicationContext вместо исходного бина.
+- Таким образом `@MockBean` заменяет собой `@Mock` и `@InjectMocks`, так как Spring выполняет DI.
+- Ожидания от мока устанавливаются обычным образом, через `when` и т.д.
+- Spring также имеет соответствующую аннотацию `@SpyBean`, которая оборачивает существующий компонент.
+
+[Top](#mockito-made-clear)
