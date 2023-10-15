@@ -1,7 +1,9 @@
 package learn.zhroadmap.p3currencies
 
+import learn.zhroadmap.p3currencies.currencies.Currencies.*
 import learn.zhroadmap.p3currencies.currencies.Currency
 import learn.zhroadmap.p3currencies.currencies.CurrencyRepository
+import learn.zhroadmap.p3currencies.currencies.StandardCurrencies
 import learn.zhroadmap.p3currencies.exchangerates.ExchangeRate
 import learn.zhroadmap.p3currencies.exchangerates.ExchangeRateRepository
 import org.slf4j.LoggerFactory
@@ -38,9 +40,9 @@ class CurrenciesApplication(
     private fun populateCurrencies(): List<Currency> {
         logger.info("Populating currencies...")
         val currencies = listOf(
-            Currency("United States Dollar", "USD", "$"),
-//                Currency("Euro", "EUR", "€"),
-            Currency("Ruble", "RUB", "₽"),
+            StandardCurrencies[USD],
+            StandardCurrencies[RUB],
+            StandardCurrencies[EUR],
         )
         currencyRepository.saveAll(currencies)
         logger.info("Stored ${currencyRepository.count()} currencies.")

@@ -11,7 +11,7 @@ data class CurrencyDto(
 
     companion object {
         fun from(currency: Currency): CurrencyDto {
-            return CurrencyDto(currency.name, currency.code, currency.sign)
+            return CurrencyDto(currency.fullName, currency.code, currency.sign)
         }
     }
 }

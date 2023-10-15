@@ -4,7 +4,7 @@ import jakarta.persistence.*
 
 @Entity
 data class Currency(
-    val name: String,
+    val fullName: String,
     @Column(unique = true)
     val code: String,
     val sign: String,
