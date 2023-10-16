@@ -31,8 +31,8 @@ class CurrenciesApplication(
     private fun populateExchangeRates(currency1: Currency, currency2: Currency ) {
         logger.info("Populating exchange rates...")
         exchangeRateRepository.saveAll(listOf(
-            ExchangeRate(BigDecimal(0.01), currency1, currency2),
-            ExchangeRate(BigDecimal(100.0), currency2, currency1),
+            ExchangeRate(BigDecimal(50.0), currency1, currency2),
+            ExchangeRate(BigDecimal(0.02), currency2, currency1),
         ))
         logger.info("Stored ${exchangeRateRepository.count()} exchange rates.")
     }

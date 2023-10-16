@@ -4,6 +4,9 @@
 # Log file
 *.log
 
+### Giga IDE
+.gigaide
+
 # BlueJ files
 *.ctxt
 

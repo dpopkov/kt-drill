@@ -21,13 +21,6 @@ class CurrencyController(
         return ResponseEntity.ofNullable(currency)
     }
 
-    // Create currency with JSON
-    /*@PostMapping
-    fun create(@RequestBody currency: CurrencyDto): ResponseEntity<CurrencyDto> {
-        return ResponseEntity.ok(currencyService.create(currency))
-    }*/
-
-    // Create currency with Form Data
     @PostMapping(consumes = [MediaType.APPLICATION_FORM_URLENCODED_VALUE])
     fun create(currency: CurrencyDto): ResponseEntity<CurrencyDto> {
         return ResponseEntity.ok(currencyService.create(currency))
