@@ -55,3 +55,8 @@
     * [In-order](examples/src/main/kotlin/ch07binarytrees/InOrderTraversal.kt)
     * [Pre-order](examples/src/main/kotlin/ch07binarytrees/PreOrderTraversal.kt)
     * [Post-order](examples/src/main/kotlin/ch07binarytrees/PostOrderTraversal.kt)
+  * Traversal Challenges
+    * 1 - The height of the tree
+      * [Solution](problems/src/main/kotlin/ch07binarytrees/BinaryTreeHeightFinder.kt)
+      * [Todo](problems/src/main/kotlin/ch07binarytrees/BinaryTreeHeightFinderTodo.kt)
+      * [Test](problems/src/test/kotlin/ch07binarytrees/BinaryTreeHeightFinderBaseTest.kt)
