@@ -14,4 +14,12 @@ class ArrayListQueue<T> : IQueue<T> {
         storage.add(element)
         return true
     }
+
+    fun enqueueAll(elements: Iterable<T>): ArrayListQueue<T> {
+        for (element in elements) {
+            enqueue(element)
+        }
+        return this
+    }
+
 }

@@ -42,11 +42,11 @@
   * [test](examples/src/test/kotlin/ch05queues/QueueBaseTest.kt)
 * Trees
   * Depth first traversal
-    * [Example](examples/src/main/kotlin/ch06trees/DepthFirstTraversal.kt)
     * [Todo](examples/src/main/kotlin/ch06trees/DepthFirstTraversalTodo.kt)
+    * [Example](examples/src/main/kotlin/ch06trees/DepthFirstTraversal.kt)
   * Level order traversal
-    * [Example](examples/src/main/kotlin/ch06trees/LevelOrderTraversal.kt)
     * [Todo](examples/src/main/kotlin/ch06trees/LevelOrderTraversalTodo.kt)
+    * [Example](examples/src/main/kotlin/ch06trees/LevelOrderTraversal.kt)
   * [base test](examples/src/test/kotlin/ch06trees/TraversalBaseTest.kt)
 * Binary Trees
   * [Convert binary tree to text diagram](common/src/main/kotlin/IBinaryNode.kt)
@@ -57,6 +57,10 @@
     * [Post-order](examples/src/main/kotlin/ch07binarytrees/PostOrderTraversal.kt)
   * Traversal Challenges
     * 1 - The height of the tree
-      * [Solution](problems/src/main/kotlin/ch07binarytrees/BinaryTreeHeightFinder.kt)
       * [Todo](problems/src/main/kotlin/ch07binarytrees/BinaryTreeHeightFinderTodo.kt)
+      * [Solution](problems/src/main/kotlin/ch07binarytrees/BinaryTreeHeightFinder.kt)
       * [Test](problems/src/test/kotlin/ch07binarytrees/BinaryTreeHeightFinderBaseTest.kt)
+    * 2 - Serialization of a Binary Tree
+      * [Todo](problems/src/main/kotlin/ch07binarytrees/BinaryTreePreOrderSerializerTodo.kt)
+      * [First Naive Solution](problems/src/main/kotlin/ch07binarytrees/BinaryTreePreOrderMyFirstSerializer.kt)
+      * [Test](problems/src/test/kotlin/ch07binarytrees/BinaryTreePreOrderSerializerBaseTest.kt)
