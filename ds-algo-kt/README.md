@@ -63,4 +63,5 @@
     * 2 - Serialization of a Binary Tree
       * [Todo](problems/src/main/kotlin/ch07binarytrees/BinaryTreePreOrderSerializerTodo.kt)
       * [First Naive Solution](problems/src/main/kotlin/ch07binarytrees/BinaryTreePreOrderMyFirstSerializer.kt)
+      * [Solution with traversal using Visitor](problems/src/main/kotlin/ch07binarytrees/BinaryTreePreOrderVisitorSerializer.kt)
       * [Test](problems/src/test/kotlin/ch07binarytrees/BinaryTreePreOrderSerializerBaseTest.kt)
