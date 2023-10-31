@@ -14,3 +14,10 @@ javafx {
     modules("javafx.controls", "javafx.graphics")
 }
 ```
+To use FXML add fxml module into build.gradle.kts:
+```kotlin
+javafx {
+    // ...
+    modules("...", "javafx.fxml")
+}
+```
