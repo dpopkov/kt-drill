@@ -58,13 +58,10 @@ class App : Application() {
             radiusProperty().bind(slider.valueProperty().multiply(2))
         }
 
-        /* Binding two text fields using string property */
-        val bufferProperty = SimpleStringProperty("buffer")
-        val textField3 = TextField().apply {
-            textProperty().bindBidirectional(bufferProperty)
-        }
+        /* Binding two text fields */
+        val textField3 = TextField()
         val textField4 = TextField().apply {
-            textProperty().bindBidirectional(bufferProperty)
+            textProperty().bindBidirectional(textField3.textProperty())
         }
 
         /* Custom Bindings */
@@ -106,7 +103,7 @@ class App : Application() {
             add(slider, 1, 2)
             add(circle, 2, 2)
 
-            add(Label("Text fields linked by property"), 0, 3)
+            add(Label("Text fields linked bidirectionally"), 0, 3)
             add(textField3, 1, 3)
             add(textField4, 2, 3)
 
