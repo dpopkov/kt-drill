@@ -5,10 +5,12 @@ import javafx.beans.binding.Bindings
 import javafx.beans.property.SimpleDoubleProperty
 import javafx.beans.property.SimpleStringProperty
 import javafx.beans.value.ObservableValue
+import javafx.collections.FXCollections
 import javafx.geometry.Insets
 import javafx.scene.Scene
 import javafx.scene.control.Button
 import javafx.scene.control.Label
+import javafx.scene.control.ListView
 import javafx.scene.control.Slider
 import javafx.scene.control.TextField
 import javafx.scene.layout.GridPane
@@ -79,6 +81,15 @@ class App : Application() {
             fillProperty().bind(colorBinding)
         }
 
+        /* Using observable list */
+        val observableList = FXCollections.observableArrayList("Apple", "Peach", "Banana")
+        val listView = ListView(observableList)
+        val changeButton = Button("Change List").apply {
+            setOnAction {
+                observableList[1] = System.currentTimeMillis().toString()
+            }
+        }
+
         val root = GridPane().apply {
             padding = Insets(5.0)
             hgap = 5.0
@@ -102,9 +113,13 @@ class App : Application() {
             add(Label("Custom binding"), 0, 4)
             add(colorSlider, 1, 4)
             add(colorCircle, 2, 4)
+
+            add(Label("Using observable collection"), 0, 5)
+            add(listView, 1, 5)
+            add(changeButton, 2, 5)
         }
         with(primaryStage) {
-            scene = Scene(root, 600.0, 250.0)
+            scene = Scene(root, 600.0, 320.0)
             show()
         }
     }
