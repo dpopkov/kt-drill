@@ -30,3 +30,20 @@ javafx {
     modules("javafx.controls", "javafx.graphics")
 }
 ```
+
+## 2 - Properties
+- Binding with ViewModel
+```kotlin
+class MyViewModel {
+    val text1Property = SimpleStringProperty("Some text")
+}
+val textField2 = TextField().apply {
+    textProperty().bindBidirectional(viewModel.text1Property)
+}
+```
+- Binding between UI controls
+```kotlin
+val circle = Circle().apply {
+    radiusProperty().bindBidirectional(slider.valueProperty())
+}
+```
