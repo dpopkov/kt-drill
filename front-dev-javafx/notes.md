@@ -47,3 +47,39 @@ val circle = Circle().apply {
     radiusProperty().bindBidirectional(slider.valueProperty())
 }
 ```
+
+## 3 - Stages and Scenes
+- Getting screens info
+```kotlin
+val screenList = Screen.getScreens()
+println("Resolution DPI: ${screenList[0].dpi}")
+```
+- Using Parameters in Application Class
+```kotlin
+override fun init() {
+    println("Initialization... Reading data from a file or a database...")
+    val args: Parameters = parameters
+    println("Named args: ${args.named}")        // Example: arg1
+    println("Unnamed args: ${args.unnamed}")    // Example: --arg2=42
+}
+```
+- Opening secondary stages (or windows)
+```kotlin
+Stage().apply {
+    title = "Secondary Owned Stage"
+    initOwner(primaryStage)
+    scene = Scene(
+        VBox(
+            Label("I'm an owned secondary stage"),
+        ), 300.0, 250.0
+    ).customCSS()
+    show()
+}
+```
+- Using CSS
+```kotlin
+private fun Scene.customCSS(): Scene {
+    stylesheets.add("css/styles.css")
+    return this
+}
+```

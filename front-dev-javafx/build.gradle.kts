@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.plugin.KotlinExecution
+
 plugins {
     kotlin("jvm") version "1.9.23"
     id("org.openjfx.javafxplugin") version "0.0.13"
