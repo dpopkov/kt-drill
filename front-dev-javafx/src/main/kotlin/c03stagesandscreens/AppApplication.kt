@@ -34,8 +34,11 @@ class AppApplication : Application() {
             },
             Button("Open 3rd secondary stage").apply {
                 setOnAction { secondaryTopStage() }
+            },
+            Button("Open stage with Thread").apply {
+                setOnAction { StageUsingThreads().start() }
             }
-        ).apply{ styleClass.add("mainStage")  }
+        ).apply { styleClass.add("mainStage") }
         with(primaryStage) {
             scene = Scene(root, 400.0, 250.0).customCSS()
             show()
@@ -84,9 +87,9 @@ class AppApplication : Application() {
             show()
         }
     }
+}
 
-    private fun Scene.customCSS(): Scene {
-        stylesheets.add("css/styles.css")
-        return this
-    }
+fun Scene.customCSS(): Scene {
+    stylesheets.add("css/styles.css")
+    return this
 }

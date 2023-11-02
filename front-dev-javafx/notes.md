@@ -83,3 +83,14 @@ private fun Scene.customCSS(): Scene {
     return this
 }
 ```
+- JavaFX Application Thread
+```kotlin
+Thread {
+    // Do some long operation...
+    // ...
+    // Run UI updating on the JavaFX Application Thread
+    Platform.runLater {
+        contents.children.add(Label("..."))
+    }
+}.start()
+```
