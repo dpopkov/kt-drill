@@ -96,3 +96,13 @@ Thread {
 ```
 
 ## 4 - Containers
+- StackPane
+```kotlin
+StackPane(
+    Circle(30.0, Color.GREEN),
+    Text("Bottom almost right").apply {
+        StackPane.setAlignment(this, Pos.BOTTOM_RIGHT)
+        StackPane.setMargin(this, Insets(0.0, 20.0, 0.0, 0.0))
+    }
+)
+```
