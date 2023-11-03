@@ -113,3 +113,9 @@ VBox(
     Button("Button in VBox"),
 ).apply { id = "vbox2" }
 ```
+- FlowPane
+```kotlin
+val fp = FlowPane().apply { 
+    orientation = Orientation.VERTICAL
+}
+```

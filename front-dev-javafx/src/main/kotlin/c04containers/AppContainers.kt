@@ -2,12 +2,12 @@ package learn.javafx.c04containers
 
 import javafx.application.Application
 import javafx.geometry.Insets
+import javafx.geometry.NodeOrientation
+import javafx.geometry.Orientation
 import javafx.geometry.Pos
 import javafx.scene.Scene
-import javafx.scene.control.Button
-import javafx.scene.control.Menu
-import javafx.scene.control.MenuBar
-import javafx.scene.control.MenuItem
+import javafx.scene.control.*
+import javafx.scene.layout.FlowPane
 import javafx.scene.layout.HBox
 import javafx.scene.layout.Priority
 import javafx.scene.layout.StackPane
@@ -37,6 +37,9 @@ class AppContainers : Application() {
                         })
                         add(MenuItem("VBox HBox").apply {
                             setOnAction { showVBoxHBox() }
+                        })
+                        add(MenuItem("FlowPane").apply {
+                            setOnAction { showFlowPane() }
                         })
                     }
                 }
@@ -83,8 +86,40 @@ class AppContainers : Application() {
                             Button("Button in VBox"),
                             Text("Text in VBox - 2"),
                         ).apply { id = "vbox2" }
-                    ).apply { id = "hbox1"}
+                    ).apply { id = "hbox1" }
                 ).apply { id = "vbox1" }
+            )
+        }
+    }
+
+    private fun showFlowPane() {
+        val fp = FlowPane()
+        (1..20).forEach { index ->
+            fp.children.add(Button("$index").apply {
+                prefWidth = 25.0 + 70.0 * Math.random()
+            })
+        }
+        with(contents.children) {
+            clear()
+            add(
+                VBox(
+                    5.0,
+                    HBox(
+                        5.0,
+                        CheckBox("Right-to-left").apply {
+                            setOnAction {
+                                fp.nodeOrientation =
+                                    if (isSelected) NodeOrientation.RIGHT_TO_LEFT else NodeOrientation.LEFT_TO_RIGHT
+                            }
+                        },
+                        CheckBox("Vertical").apply {
+                            setOnAction {
+                                fp.orientation = if (isSelected) Orientation.VERTICAL else Orientation.HORIZONTAL
+                            }
+                        }
+                    ),
+                    fp
+                )
             )
         }
     }
