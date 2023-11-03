@@ -106,3 +106,10 @@ StackPane(
     }
 )
 ```
+- VBox, HBox
+```kotlin
+VBox(
+    Text("Text in VBox"),
+    Button("Button in VBox"),
+).apply { id = "vbox2" }
+```

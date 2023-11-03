@@ -8,3 +8,13 @@ VBox {
 .mainStage Button {
     -fx-min-width: 25em;
 }
+
+#vbox1 {
+    -fx-background-color: lightyellow;
+}
+#hbox1 {
+    -fx-background-color: lightgreen;
+}
+#vbox2 {
+    -fx-background-color: lightcoral;
+}

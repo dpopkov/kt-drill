@@ -4,9 +4,11 @@ import javafx.application.Application
 import javafx.geometry.Insets
 import javafx.geometry.Pos
 import javafx.scene.Scene
+import javafx.scene.control.Button
 import javafx.scene.control.Menu
 import javafx.scene.control.MenuBar
 import javafx.scene.control.MenuItem
+import javafx.scene.layout.HBox
 import javafx.scene.layout.Priority
 import javafx.scene.layout.StackPane
 import javafx.scene.layout.VBox
@@ -32,6 +34,9 @@ class AppContainers : Application() {
                     with(items) {
                         add(MenuItem("StackPane").apply {
                             setOnAction { showStackPane() }
+                        })
+                        add(MenuItem("VBox HBox").apply {
+                            setOnAction { showVBoxHBox() }
                         })
                     }
                 }
@@ -59,6 +64,27 @@ class AppContainers : Application() {
                         StackPane.setMargin(this, Insets(0.0, 20.0, 0.0, 0.0))
                     }
                 )
+            )
+        }
+    }
+
+    private fun showVBoxHBox() {
+        with(contents.children) {
+            clear()
+            add(
+                VBox(
+                    Text("Text in VBox"),
+                    Circle(30.0, Color.LIGHTCORAL),
+                    HBox(
+                        Text("Text in HBox"),
+                        Button("Button in HBox"),
+                        VBox(
+                            Text("Text in VBox - 1"),
+                            Button("Button in VBox"),
+                            Text("Text in VBox - 2"),
+                        ).apply { id = "vbox2" }
+                    ).apply { id = "hbox1"}
+                ).apply { id = "vbox1" }
             )
         }
     }
