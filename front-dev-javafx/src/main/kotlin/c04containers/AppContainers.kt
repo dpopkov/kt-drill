@@ -8,6 +8,7 @@ import javafx.geometry.Pos
 import javafx.scene.Scene
 import javafx.scene.control.*
 import javafx.scene.layout.FlowPane
+import javafx.scene.layout.GridPane
 import javafx.scene.layout.HBox
 import javafx.scene.layout.Priority
 import javafx.scene.layout.StackPane
@@ -40,6 +41,9 @@ class AppContainers : Application() {
                         })
                         add(MenuItem("FlowPane").apply {
                             setOnAction { showFlowPane() }
+                        })
+                        add(MenuItem("GridPane").apply {
+                            setOnAction { showGridPane() }
                         })
                     }
                 }
@@ -121,6 +125,33 @@ class AppContainers : Application() {
                     fp
                 )
             )
+        }
+    }
+
+    private fun showGridPane() {
+        with(contents.children) {
+            val gp = GridPane().apply {
+                style = """
+                    -fx-border-width: 1px;
+                    -fx-padding: 0.5em;
+                    -fx-border-color: lightgrey;
+                    -fx-hgap: 0.5em;
+                    -fx-vgap: 0.5em;
+                """
+            }
+            with(gp) {
+                add(Text("First Name, Last Name"), 0, 0)
+                add(HBox(TextField(), TextField()), 1, 0, 2, 1)
+                add(Text("Street"), 0, 1)
+                add(
+                    HBox(
+                        TextField().apply { prefColumnCount = 4 },
+                        TextField().also { HBox.setHgrow(it, Priority.ALWAYS) }
+                    ), 1, 1, 2, 1
+                )
+            }
+            clear()
+            add(gp)
         }
     }
 }

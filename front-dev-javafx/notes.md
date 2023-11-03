@@ -119,3 +119,11 @@ val fp = FlowPane().apply {
     orientation = Orientation.VERTICAL
 }
 ```
+- GridPane
+```kotlin
+val gp = GridPane()
+with(gp) {
+    add(Text("First Name, Last Name"), 0, 0)
+    add(HBox(TextField(), TextField()), 1, 0, 2, 1)
+}
+```
