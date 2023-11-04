@@ -7,11 +7,14 @@ import javafx.geometry.Orientation
 import javafx.geometry.Pos
 import javafx.scene.Scene
 import javafx.scene.control.*
+import javafx.scene.layout.AnchorPane
+import javafx.scene.layout.BorderPane
 import javafx.scene.layout.FlowPane
 import javafx.scene.layout.GridPane
 import javafx.scene.layout.HBox
 import javafx.scene.layout.Priority
 import javafx.scene.layout.StackPane
+import javafx.scene.layout.TilePane
 import javafx.scene.layout.VBox
 import javafx.scene.paint.Color
 import javafx.scene.shape.Circle
@@ -44,6 +47,15 @@ class AppContainers : Application() {
                         })
                         add(MenuItem("GridPane").apply {
                             setOnAction { showGridPane() }
+                        })
+                        add(MenuItem("TilePane").apply {
+                            setOnAction { showTilePane() }
+                        })
+                        add(MenuItem("BorderPane").apply {
+                            setOnAction { showBorderPane() }
+                        })
+                        add(MenuItem("AnchorPane").apply {
+                            setOnAction { showAnchorPane() }
                         })
                     }
                 }
@@ -152,6 +164,55 @@ class AppContainers : Application() {
             }
             clear()
             add(gp)
+        }
+    }
+
+    private fun showTilePane() {
+        with(contents.children) {
+            val tilePane = TilePane().apply {
+                style = """
+                    -fx-border-width: 1px;
+                    -fx-padding: 0.5em;
+                    -fx-border-color: lightgrey;
+                    -fx-hgap: 0.5em;
+                    -fx-vgap: 0.5em;
+                """
+            }
+            (1..15).forEach {
+                tilePane.children.add(Circle(20.0 + 10.0 * Math.random()))
+            }
+            clear()
+            add(tilePane)
+        }
+    }
+
+    private fun showBorderPane() {
+        with(contents.children) {
+            clear()
+            add(BorderPane().apply {
+                top = Text("Top").also { BorderPane.setAlignment(it, Pos.TOP_CENTER) }
+                center = Text("Center")
+                left = Text("Left").also { BorderPane.setAlignment(it, Pos.CENTER_LEFT)}
+                right = Text("Right").also { BorderPane.setAlignment(it, Pos.CENTER_RIGHT)}
+                bottom = Text("Bottom").also { BorderPane.setAlignment(it, Pos.BOTTOM_CENTER)}
+            })
+        }
+    }
+
+    private fun showAnchorPane() {
+        with(contents.children) {
+            clear()
+            val rightTop = Text("Right Top").apply {
+                AnchorPane.setTopAnchor(this, 30.0)
+                AnchorPane.setRightAnchor(this, 40.0)
+            }
+            val leftBottom = Text("Left Bottom").apply {
+                AnchorPane.setBottomAnchor(this, 30.0)
+                AnchorPane.setLeftAnchor(this, 40.0)
+            }
+            add(AnchorPane().apply {
+                children.addAll(rightTop, leftBottom)
+            })
         }
     }
 }
