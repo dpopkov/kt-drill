@@ -18,3 +18,7 @@ VBox {
 #vbox2 {
     -fx-background-color: lightcoral;
 }
+
+.dialog-contents {
+  -fx-padding: 1em;
+}

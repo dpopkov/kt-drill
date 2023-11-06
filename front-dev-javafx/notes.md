@@ -127,3 +127,28 @@ with(gp) {
     add(HBox(TextField(), TextField()), 1, 0, 2, 1)
 }
 ```
+
+## 5 - Visual Nodes
+- Coordinate Systems
+- Shapes
+- Canvas
+```kotlin
+val canvas = Canvas(canvasWidth, canvasHeight)
+val g = canvas.graphicsContext2D
+g.fillRect(x, y, w, h)
+```
+- Image Nodes
+- Text Fields and Text Areas
+- Button Bars
+- Menus
+- Toolbars
+- Checkboxes
+- RadioButtons
+- Combo Boxes
+- Sliders
+- Other Controls
+  - ColorPicker
+  - DatePicker
+  - Pagination - tool for paginating large lists
+  - ProgressIndicator
+  - Spinner
