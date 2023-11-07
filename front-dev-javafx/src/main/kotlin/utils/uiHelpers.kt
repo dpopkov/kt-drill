@@ -1,11 +1,13 @@
 package learn.javafx.utils
 
+import javafx.beans.value.ObservableValue
 import javafx.collections.ObservableList
 import javafx.scene.control.MenuItem
 import javafx.scene.control.RadioButton
 import javafx.scene.control.ToggleGroup
 import javafx.scene.layout.Region
 import javafx.scene.paint.Color
+import javafx.scene.text.Text
 
 fun VerticalStrut(height: Int) = Region().apply {
     prefHeight = height.toDouble()
@@ -32,4 +34,8 @@ fun ToggleGroup.selectToggle(id: String) {
 fun radioButton(id: String, label: String, toggleGroup: ToggleGroup) = RadioButton(label).apply {
     toggleGroup.toggles.add(this)
     this.userData = id
+}
+
+fun textBindedTo(observableValue: ObservableValue<String>) = Text().apply {
+    textProperty().bind(observableValue)
 }

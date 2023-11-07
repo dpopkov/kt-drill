@@ -128,7 +128,7 @@ with(gp) {
 }
 ```
 
-## 5 - Visual Nodes
+## 5.1 - Visual Nodes
 - Coordinate Systems
 - Shapes
 - Canvas
@@ -152,3 +152,17 @@ g.fillRect(x, y, w, h)
   - Pagination - tool for paginating large lists
   - ProgressIndicator
   - Spinner
+
+## 5.2 - Control Panes
+- Scroll Panes
+```kotlin
+val scrollPane = ScrollPane(vBox).apply {
+    isPannable = true
+    isFitToWidth = true
+    isFitToHeight = true
+    vvalueProperty().bindBidirectional(vValProp)
+}
+Button("Hide scrollbars").apply {
+    setOnAction { scrollPane.vbarPolicy = ScrollPane.ScrollBarPolicy.NEVER }
+}
+```

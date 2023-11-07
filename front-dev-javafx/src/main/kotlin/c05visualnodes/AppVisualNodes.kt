@@ -51,6 +51,11 @@ class AppVisualNodes : Application() {
                         menuItem("ComboBoxes") { showComboBoxes() }
                         menuItem("Sliders") { showSliders() }
                     }
+                },
+                Menu("Control Panes").apply {
+                    with(items) {
+                        menuItem("Show Control Panes Window") { DialogControlPanes().start() }
+                    }
                 }
             ),
             contents
