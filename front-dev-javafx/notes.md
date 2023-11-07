@@ -166,3 +166,52 @@ Button("Hide scrollbars").apply {
     setOnAction { scrollPane.vbarPolicy = ScrollPane.ScrollBarPolicy.NEVER }
 }
 ```
+- Accordions
+```kotlin
+Accordion(
+    TitledPane("Pane 1", VBox(Text("Text on Pane 1"))),
+    TitledPane("Pane 2", VBox(Text("Text on Pane 2"))),
+)
+```
+- Tab Panes
+```kotlin
+TabPane(
+    Tab("Tab 1", VBox(Text("Text on Tab 1"))),
+    Tab("Tab 2", VBox(Text("Text on Tab 2"))),
+).apply {
+    tabClosingPolicy = TabPane.TabClosingPolicy.UNAVAILABLE
+}
+```
+- Split Panes
+```kotlin
+SplitPane(pane1, pane2).apply {
+    orientation = Orientation.HORIZONTAL
+}
+```
+- Styling Panes
+  - CSS properties applicable to **all nodes**:
+    - `-fx-blend-mode`
+    - `-fx-cursor`
+    - `-fx-opacity`
+    - `-fx-rotate`
+    - `-fx-scale-x`, `-fx-scale-y`, `-fx-scale-z`
+    - `-fx-translate-x`, `-fx-translate-y`, `-fx-translate-z`
+    - `visibility`
+  - CSS properties applicable to **shapes**:
+    - `-fx-fill` : fill color
+    - `-fx-smooth`
+    - `-fx-stroke` : stroke color
+  - CSS properties applicable to **text**:
+    - `-fx-font`
+    - `-fx-strikethrough`, `-fx-underline`
+    - `-fx-tab-size`
+    - `-fx-text-alignment` : left,center,right
+    - `-fx-text-origin` : baseline,top,bottom
+  - CSS properties applicable to **regions**:
+    - `-fx-background-...` : color,image,insets,position,radius,repeat,size
+    - `-fx-border-...` : radius,style,image-repeat,image-slice
+    - `-fx-padding`
+    - `-fx-...-shape` : position,scale
+    - `-fx-region-...` : background,border
+    - `-fx-...-height` : min,pref,max
+    - `-fx-...-width` : min,pref,max
