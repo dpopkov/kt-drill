@@ -215,3 +215,23 @@ SplitPane(pane1, pane2).apply {
     - `-fx-region-...` : background,border
     - `-fx-...-height` : min,pref,max
     - `-fx-...-width` : min,pref,max
+
+
+## 6 - Lists and Tables
+- Lists
+```kotlin
+val items = FXCollections.observableArrayList("Apple", "Grapes", "Banana")
+val listView = ListView(items).apply {
+    placeholder = Text("The list is empty")
+    selectionModel.selectionMode = SelectionMode.MULTIPLE
+}
+// Rendering
+val listView = ListView(persons).apply {
+  cellFactory = Callback<ListView<Person>, ListCell<Person>> { ... }
+}
+// Editing
+val listView = ListView(persons).apply {
+  isEditable = true
+  cellFactory = cellFactoryForPerson
+}
+```
