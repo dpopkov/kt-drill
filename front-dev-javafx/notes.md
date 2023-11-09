@@ -235,3 +235,14 @@ val listView = ListView(persons).apply {
   cellFactory = cellFactoryForPerson
 }
 ```
+- TableViews
+```kotlin
+val tableView = TableView(persons).apply {
+    placeholder = Text("No visible data exists.")
+    isEditable = true
+    columns.addAll(
+        firstNameColumn,
+        lastNameColumn,
+    )
+}
+```

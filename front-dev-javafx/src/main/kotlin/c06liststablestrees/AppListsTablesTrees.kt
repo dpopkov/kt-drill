@@ -2,6 +2,9 @@ package learn.javafx.c06liststablestrees
 
 import javafx.application.Application
 import javafx.beans.Observable
+import javafx.beans.property.Property
+import javafx.beans.property.SimpleObjectProperty
+import javafx.beans.property.SimpleStringProperty
 import javafx.collections.FXCollections
 import javafx.scene.Node
 import javafx.scene.Scene
@@ -11,7 +14,11 @@ import javafx.scene.control.ListView
 import javafx.scene.control.SelectionMode
 import javafx.scene.control.Tab
 import javafx.scene.control.TabPane
+import javafx.scene.control.TableColumn
+import javafx.scene.control.TableView
+import javafx.scene.control.cell.PropertyValueFactory
 import javafx.scene.control.cell.TextFieldListCell
+import javafx.scene.control.cell.TextFieldTableCell
 import javafx.scene.layout.HBox
 import javafx.scene.layout.VBox
 import javafx.scene.text.Text
@@ -19,6 +26,8 @@ import javafx.stage.Stage
 import javafx.util.Callback
 import javafx.util.StringConverter
 import learn.javafx.utils.VerticalStrut
+import java.time.LocalDate
+import java.time.Month
 
 fun main() {
     Application.launch(AppListsTablesTrees::class.java)
@@ -31,6 +40,7 @@ class AppListsTablesTrees : Application() {
             Tab("Lists", buildLists()),
             Tab("List Rendered", buildListOfPersons()),
             Tab("List Editable", buildListOfEditableCells()),
+            Tab("Table", buildTables()),
         )
         with(primaryStage) {
             scene = Scene(tabPane, 800.0, 600.0)
@@ -137,4 +147,110 @@ class AppListsTablesTrees : Application() {
         )
     }
 
+    class Person {
+        enum class Gender { M, F, N }
+
+        val firstNameProperty: Property<String> = SimpleStringProperty()
+        fun firstNameProperty() = firstNameProperty // need this fun for table
+        var firstName: String
+            get() = firstNameProperty.value
+            set(v) {
+                firstNameProperty.value = v
+            }
+        val lastNameProperty: Property<String> = SimpleStringProperty()
+        fun lastNameProperty() = lastNameProperty // need this fun for table
+        var lastName: String
+            get() = lastNameProperty.value
+            set(v) {
+                lastNameProperty.value = v
+            }
+        val birthdateProperty: Property<LocalDate> = SimpleObjectProperty()
+        fun birthdateProperty() = birthdateProperty // need this fun for table
+        var birthdate: LocalDate
+            get() = birthdateProperty.value
+            set(v) {
+                birthdateProperty.value = v
+            }
+        val genderProperty: Property<Gender> = SimpleObjectProperty()
+        fun genderProperty() = genderProperty // need this fun for table
+        var gender: Gender
+            get() = genderProperty.value
+            set(v) {
+                genderProperty.value = v
+            }
+
+        constructor(firstName: String, lastName: String, birthdate: LocalDate, gender: Gender) {
+            this.firstName = firstName
+            this.lastName = lastName
+            this.birthdate = birthdate
+            this.gender = gender
+        }
+
+        override fun toString(): String {
+            return "Person[firstName=$firstName, lastName=$lastName, birthdate=$birthdate, gender=$gender]"
+        }
+    }
+
+    private fun buildTables(): Node {
+        val persons = FXCollections.observableArrayList<Person>(
+            Person("Jack", "Sparrow", LocalDate.of(1987, Month.AUGUST, 12), Person.Gender.M),
+            Person("Jane", "Doe", LocalDate.of(1988, Month.SEPTEMBER, 14), Person.Gender.F),
+            Person("Bob", "Martin", LocalDate.of(1967, Month.JUNE, 16), Person.Gender.M),
+            Person("Martin", "Fowler", LocalDate.of(1968, Month.JULY, 18), Person.Gender.M),
+        )
+        val personTextFieldRenderer = TextFieldTableCell.forTableColumn<Person>()
+        val genderTextFieldRenderer = TextFieldTableCell.forTableColumn<Person, Person.Gender>(
+            object : StringConverter<Person.Gender>() {
+                private val regex = "\\W+".toRegex()
+
+                override fun toString(obj: Person.Gender) = "[$obj]"
+
+                override fun fromString(string: String): Person.Gender {
+                    val u = string.replace(regex, "").uppercase()
+                    return when (u) {
+                        "M", "F", "N" -> Person.Gender.valueOf(u)
+                        else -> Person.Gender.N
+                    }
+                }
+            }
+        )
+        val dateFieldRenderer = DatePickerTableCell.forTableColumn<Person>(datePickerEditable = true)
+
+        val firstNameColumn = TableColumn<Person, String>("First Name").apply {
+            isEditable = true
+            cellValueFactory = PropertyValueFactory("firstName")
+            cellFactory = personTextFieldRenderer
+        }
+        val lastNameColumn = TableColumn<Person, String>("Last Name").apply {
+            isEditable = true
+            cellValueFactory = PropertyValueFactory("lastName")
+            cellFactory = personTextFieldRenderer
+        }
+        val birthDateColumn = TableColumn<Person, LocalDate>("Birthdate").apply {
+            isEditable = true
+            cellValueFactory = PropertyValueFactory("birthdate")
+            cellFactory = dateFieldRenderer
+        }
+        val genderColumn = TableColumn<Person, Person.Gender>("Gender").apply {
+            isEditable = true
+            cellValueFactory = PropertyValueFactory("gender")
+            cellFactory = genderTextFieldRenderer
+        }
+        val tableView = TableView(persons).apply {
+            placeholder = Text("No visible data exists.")
+            isEditable = true
+            columns.addAll(
+                firstNameColumn,
+                lastNameColumn,
+                birthDateColumn,
+                genderColumn,
+            )
+        }
+        val listView = ListView(persons)
+        return VBox(
+            tableView,
+            VerticalStrut(10),
+            listView,
+        )
+    }
 }
