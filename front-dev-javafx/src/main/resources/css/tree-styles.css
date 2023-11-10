@@ -1,0 +1,10 @@
+.tree-cell {
+    -fx-text-fill: green;
+    -fx-font-size: 10pt;
+}
+.tree-cell:collapsed {
+    -fx-font-weight: normal;
+}
+.tree-cell:expanded {
+    -fx-font-weight: bold;
+}

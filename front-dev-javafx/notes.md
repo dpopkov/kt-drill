@@ -246,3 +246,13 @@ val tableView = TableView(persons).apply {
     )
 }
 ```
+- TreeViews
+```kotlin
+val treeView = TreeView(tree).apply {
+    isShowRoot = false
+    isEditable = true
+    cellFactory = TextFieldTreeCell.forTreeView()
+}.apply {
+  stylesheets.add("css/tree-styles.css")
+}
+```

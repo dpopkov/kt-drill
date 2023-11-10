@@ -8,17 +8,11 @@ import javafx.beans.property.SimpleStringProperty
 import javafx.collections.FXCollections
 import javafx.scene.Node
 import javafx.scene.Scene
-import javafx.scene.control.Button
-import javafx.scene.control.ListCell
-import javafx.scene.control.ListView
-import javafx.scene.control.SelectionMode
-import javafx.scene.control.Tab
-import javafx.scene.control.TabPane
-import javafx.scene.control.TableColumn
-import javafx.scene.control.TableView
+import javafx.scene.control.*
 import javafx.scene.control.cell.PropertyValueFactory
 import javafx.scene.control.cell.TextFieldListCell
 import javafx.scene.control.cell.TextFieldTableCell
+import javafx.scene.control.cell.TextFieldTreeCell
 import javafx.scene.layout.HBox
 import javafx.scene.layout.VBox
 import javafx.scene.text.Text
@@ -41,6 +35,7 @@ class AppListsTablesTrees : Application() {
             Tab("List Rendered", buildListOfPersons()),
             Tab("List Editable", buildListOfEditableCells()),
             Tab("Table", buildTables()),
+            Tab("Tree", buildTree()),
         )
         with(primaryStage) {
             scene = Scene(tabPane, 800.0, 600.0)
@@ -252,5 +247,37 @@ class AppListsTablesTrees : Application() {
             VerticalStrut(10),
             listView,
         )
+    }
+
+    private fun buildTree(): Node {
+        val tree: TreeItem<String> = tree {
+            item("Departments") {
+                item("Sales") {
+                    item("Jack Sparrow")
+                    item("Dave Thomas")
+                }
+                item("IT") {
+                    item("offshore") {
+                        item("Bob Martin")
+                        item("Rob Pike")
+                    }
+                    item("onshore") {
+                        item("Richard Stallman")
+                        item("Kent Beck")
+                    }
+                }
+                for (i in 1..3) {
+                    item("Extra $i")
+                }
+            }
+        }.build()
+        val treeView = TreeView(tree).apply {
+            isShowRoot = false
+            isEditable = true
+            cellFactory = TextFieldTreeCell.forTreeView()
+        }.apply {
+            stylesheets.add("css/tree-styles.css")
+        }
+        return treeView
     }
 }
