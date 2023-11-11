@@ -256,3 +256,7 @@ val treeView = TreeView(tree).apply {
   stylesheets.add("css/tree-styles.css")
 }
 ```
+
+## 7 - Events
+- Event Handlers and Filters
+- Simple Drag and Drop
