@@ -9,7 +9,10 @@ import javafx.scene.control.Tab
 import javafx.scene.control.TabPane
 import javafx.scene.control.TextArea
 import javafx.scene.control.TextField
+import javafx.scene.image.Image
+import javafx.scene.input.ClipboardContent
 import javafx.scene.input.MouseEvent
+import javafx.scene.input.TransferMode
 import javafx.scene.layout.HBox
 import javafx.scene.layout.Pane
 import javafx.scene.layout.StackPane
@@ -33,6 +36,7 @@ class AppEvents : Application() {
                 TabPane(
                     Tab("Simple Events", buildSimpleEvents()),
                     Tab("Simple Drag and Drop", buildSimpleDragAndDrop()),
+                    Tab("Full Gesture Drag and Drop", buildFullGestureDragAndDrop()),
                 )
             )
         }
@@ -85,7 +89,7 @@ class AppEvents : Application() {
     private fun buildSimpleDragAndDrop(): Node {
         val pane1 = Pane()
         val dragDelta = object {
-            var x = 0.0;
+            var x = 0.0
             var y = 0.0
         }
         val sourceTextField = TextField("Source Node").apply {
@@ -179,4 +183,57 @@ class AppEvents : Application() {
         )
     }
 
+    private fun buildFullGestureDragAndDrop(): Node {
+        val dndImage = Image("images/drag-and-drop.png", false)
+        val sourceTextField = TextField().apply {
+            promptText = "Enter text, only then drag"
+            onDragDetected = EventHandler { evt ->
+                println("Source: drag detected")
+                if (text.isNotBlank()) {
+                    /* In-app transfer of some text */
+                    startDragAndDrop(*TransferMode.COPY_OR_MOVE).run {
+                        /* Provide a visual cue */
+                        setDragView(dndImage, 0.0, 0.0)
+                        /* Set the contents */
+                        setContent(ClipboardContent().apply { putString(text.trim()) })
+                    }
+                    cursor = Cursor.MOVE
+                }
+                evt.consume()
+            }
+            onDragDone = EventHandler {evt ->
+                println("Source: drag done")
+                when(evt.transferMode) {
+                    TransferMode.MOVE -> text = ""
+                    else -> {}
+                }
+                cursor = Cursor.TEXT
+            }
+        }
+        val targetTextField = TextField().apply {
+            promptText = "Drop here"
+            onDragOver = EventHandler { evt ->
+                evt.dragboard.run {
+                    if (hasString()) {
+                        evt.acceptTransferModes(*TransferMode.COPY_OR_MOVE)
+                    }
+                }
+                evt.consume()
+            }
+            onDragDropped = EventHandler {evt ->
+                /* Transferring the data to the target text field */
+                val txt: String? = evt.dragboard.string
+                if (txt != null) {
+                    text = txt
+                }
+                evt.isDropCompleted = (txt != null)
+                evt.consume()
+            }
+        }
+        return VBox(10.0,
+            VerticalStrut(10),
+            Text("Enter text in left field and drag to the right field to Copy or Shift-drag to Move"),
+            HBox(10.0, sourceTextField, targetTextField)
+        )
+    }
 }
