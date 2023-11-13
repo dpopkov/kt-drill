@@ -261,3 +261,17 @@ val treeView = TreeView(tree).apply {
 - Event Handlers and Filters
 - Simple Drag and Drop
 - Full Gesture Drag and Drop
+
+
+## 9 - Concurrency
+- JavaFX Concurrency Framework: javafx.concurrent.Task
+```kotlin
+val task = object : Task<Unit>() {
+    override fun call() {
+        updateMessage("Started")
+        // ...
+        updateMessage("Done")
+    }
+}
+pool.submit(task)
+```
