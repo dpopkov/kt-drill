@@ -2,12 +2,15 @@ package learn.javafx.c09concurrency
 
 import javafx.application.Application
 import javafx.application.Platform
+import javafx.collections.FXCollections
+import javafx.collections.ObservableList
 import javafx.concurrent.Service
 import javafx.concurrent.Task
 import javafx.concurrent.Worker
 import javafx.scene.Node
 import javafx.scene.Scene
 import javafx.scene.control.Button
+import javafx.scene.control.ListView
 import javafx.scene.control.Slider
 import javafx.scene.control.TextField
 import javafx.scene.layout.HBox
@@ -16,6 +19,9 @@ import javafx.scene.layout.VBox
 import javafx.scene.text.Text
 import javafx.stage.Stage
 import javafx.stage.WindowEvent
+import kotlinx.coroutines.*
+import kotlinx.coroutines.channels.ReceiveChannel
+import kotlinx.coroutines.channels.produce
 import learn.javafx.utils.VerticalStrut
 import java.time.LocalTime
 import java.util.concurrent.Executors
@@ -35,11 +41,12 @@ class AppConcurrency : Application() {
             children.add(buildContents())
         }
         with(primaryStage) {
-            scene = Scene(root, 500.0, 350.0)
+            scene = Scene(root, 540.0, 400.0)
             show()
         }
     }
 
+    @OptIn(DelicateCoroutinesApi::class, ExperimentalCoroutinesApi::class)
     private fun buildContents(): Node {
         val tf = TextField()
         val btnFreeze = Button("Freezing Thread Example").apply {
@@ -68,7 +75,7 @@ class AppConcurrency : Application() {
                 }.start()
             }
         }
-        val boxedThead = VBox(
+        val boxedThread = VBox(
             4.0,
             Text("Using just Thread:"),
             btnFreeze,
@@ -170,13 +177,85 @@ class AppConcurrency : Application() {
             HBox(4.0, btnStart3, btnCancel3, slider3, text3),
         )
 
+        /* Using Coroutines */
+        val outputData: ObservableList<String> = FXCollections.observableArrayList("", "", "", "")
+        fun ObservableList<String>.pushMsg(s: String) {
+            add(0, s)
+            if (size > 4) {
+                removeAt(4)
+            }
+        }
+
+        val outputListView = ListView(outputData)
+        val btnStartCountdown = Button("Start Countdown").apply {
+            setOnAction {
+                /* Launching coroutine in JavaFX main UI thread */
+                val job = GlobalScope.launch(Dispatchers.Main) {
+                    for (i in 10 downTo 1) {
+                        outputData.pushMsg("Countdown $i")
+                        delay(500L)
+                    }
+                    outputData.pushMsg("Done")
+                }
+                userData = job
+            }
+        }
+        val btnStopCountdown = Button("Stop Countdown").apply {
+            setOnAction {
+                (btnStartCountdown.userData as Job).cancel()
+            }
+        }
+        val btnStartCalculatingPi = Button("Calculate PI").apply {
+            suspend fun CoroutineScope.stupidPi(): ReceiveChannel<Double> = produce(Dispatchers.Default) {
+                var i = 1L
+                var sign = 1
+                var value = 0.0
+                while (true) {
+                    value += 4.0 * sign / (2.0 * i.toDouble() - 1.0)
+                    sign *= -1
+                    i++
+                    if (i % 100_000_000 == 0L) {
+                        send(value)
+                    }
+                }
+            }
+            setOnAction {
+                val job = GlobalScope.launch(Dispatchers.Main) {
+                    val producer = stupidPi();
+                    while (true) {
+                        outputData.pushMsg(producer.receive().toString())
+                    }
+                }
+                userData = job
+            }
+        }
+        val btnStopCalculatingPi = Button("Stop calculating PI").apply {
+            setOnAction {
+                (btnStartCalculatingPi.userData as Job).cancel()
+            }
+        }
+        val boxedCoroutines = VBox(
+            4.0,
+            Text("Using coroutines:"),
+            HBox(
+                4.0,
+                VBox(
+                    HBox(btnStartCountdown, btnStopCountdown),
+                    HBox(btnStartCalculatingPi, btnStopCalculatingPi)
+                ),
+                outputListView
+            )
+        )
+
         return VBox(
             5.0,
-            boxedThead,
+            boxedThread,
             VerticalStrut(10),
             boxedPooledTask,
             VerticalStrut(10),
             boxedService,
+            VerticalStrut(10),
+            boxedCoroutines,
         ).apply {
             style = "-fx-padding: 10;"
         }

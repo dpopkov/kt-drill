@@ -275,3 +275,10 @@ val task = object : Task<Unit>() {
 }
 pool.submit(task)
 ```
+- Coroutines
+```kotlin
+dependencies {
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-javafx:1.8.0")
+    // ...
+}
+```

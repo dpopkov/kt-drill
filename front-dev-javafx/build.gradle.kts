@@ -13,6 +13,7 @@ repositories {
 }
 
 dependencies {
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-javafx:1.8.0")
     testImplementation(kotlin("test"))
 }
 
